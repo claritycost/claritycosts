@@ -138,7 +138,7 @@
   line-height: 1.65;
   color: var(--slate-700);
   font-weight: 300;
-  max-width: 420px;
+  max-width: 600px;
   margin: 0 auto 32px;
   opacity: 0;
 }
@@ -336,7 +336,7 @@
 }
 
 .sectionInner {
-  max-width: 480px;
+  max-width: 960px;
   margin: 0 auto;
 }
 
@@ -366,8 +366,8 @@
 
 /* Pain grid */
 .painGrid {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
 }
 
@@ -401,20 +401,14 @@
 
 /* Steps grid */
 .stepsGrid {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
   position: relative;
 }
 
 .stepsGrid::before {
-  content: '';
-  position: absolute;
-  left: 20px;
-  top: 40px;
-  bottom: 40px;
-  width: 1px;
-  background: linear-gradient(180deg, var(--indigo-200), transparent);
+  display: none;
 }
 
 .stepCard {
@@ -472,7 +466,7 @@
 }
 
 .finalCtaInner {
-  max-width: 400px;
+  max-width: 600px;
   margin: 0 auto;
 }
 
