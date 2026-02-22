@@ -17,7 +17,7 @@ const PAIN_POINTS = [
   {
     icon: '😬',
     title: 'You undercharge to win',
-    body: 'You drop your price before they even push back. Now you're resentful halfway through the project.',
+    body: "You drop your price before they even push back. Now you're resentful halfway through the project.",
   },
   {
     icon: '😶',
