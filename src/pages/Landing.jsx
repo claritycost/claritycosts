@@ -63,7 +63,7 @@ export default function Landing() {
       {/* ── NAV ── */}
       <nav className={styles.nav}>
         <span className={styles.logo}>
-          <span className={styles.logoMark}>C</span>
+          <img src="/cc_logo.jpg" alt="Clarity Costs" className={styles.logoMark} />
           <span className={styles.logoText}>Clarity Costs</span>
         </span>
         <button
@@ -211,7 +211,7 @@ export default function Landing() {
       {/* ── FOOTER ── */}
       <footer className={styles.footer}>
         <span className={styles.logo}>
-          <span className={styles.logoMark}>C</span>
+          <img src="/cc_logo.jpg" alt="Clarity Costs" className={styles.logoMark} />
           <span className={styles.logoText}>Clarity Costs</span>
         </span>
         <p className={styles.footerTagline}>
