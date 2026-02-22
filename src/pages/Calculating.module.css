@@ -1,0 +1,98 @@
+.page {
+  min-height: 100dvh;
+  background: linear-gradient(135deg, var(--indigo-950) 0%, var(--indigo-800) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 24px;
+}
+
+.card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius-lg);
+  padding: 44px 32px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  backdrop-filter: blur(8px);
+}
+
+.spinner {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 24px;
+  color: var(--indigo-400);
+}
+
+.spinnerSvg {
+  width: 100%;
+  height: 100%;
+  animation: spin 1.4s linear infinite;
+}
+
+.spinnerCircle {
+  stroke-dasharray: 80;
+  stroke-dashoffset: 60;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--white);
+  letter-spacing: -0.02em;
+  margin-bottom: 28px;
+  font-style: italic;
+}
+
+.stepsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+  margin-bottom: 28px;
+}
+
+.stepRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: opacity 0.4s, transform 0.4s;
+}
+
+.stepVisible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.stepHidden {
+  opacity: 0.25;
+  transform: translateX(-4px);
+}
+
+.stepTick {
+  font-size: 13px;
+  color: var(--indigo-400);
+  width: 18px;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.stepText {
+  font-size: 13px;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.4;
+  font-weight: 300;
+}
+
+.tagline {
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+  font-style: italic;
+}

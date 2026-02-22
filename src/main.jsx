@@ -1,0 +1,19 @@
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Landing from './pages/Landing'
+import Start from './pages/Start'
+import Calculating from './pages/Calculating'
+import './index.css'
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/start" element={<Start />} />
+        <Route path="/calculating" element={<Calculating />} />
+      </Routes>
+    </BrowserRouter>
+  </React.StrictMode>
+)
