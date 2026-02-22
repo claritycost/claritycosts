@@ -19,8 +19,7 @@ export default function Calculating() {
       const t = setTimeout(() => setStepIndex(s => s + 1), 1400)
       return () => clearTimeout(t)
     }
-    // Results page will be built in a later session
-    // For now, loop back to demonstrate the UI
+ navigate('/results')
   }, [stepIndex])
 
   return (
