@@ -210,6 +210,19 @@ export default function Results() {
     });
   };
 
+  // ── Navigate to /save, passing rate card via localStorage ──
+  const handleSaveCTA = () => {
+    localStorage.setItem("claritycosts_results", JSON.stringify({
+      dayRate:              gbp(data.dayRate),
+      projectRate:         gbp(data.projectRate),
+      retainerRate:        gbp(data.retainerRate),
+      positioningStatement: data.positioningStatement,
+      chargeScript:        data.chargeScript,
+      submissionId:        data.submissionId || null,
+    }));
+    navigate("/save");
+  };
+
   const today = new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
 
   // ── Loading ──
@@ -345,7 +358,7 @@ export default function Results() {
             <div className="cta-rule" />
             <h2 className="cta-title">Save your rate card</h2>
             <p className="cta-sub">Get this sent to your inbox as a PDF, plus a guide to raising rates with existing clients.</p>
-            <button className="btn-gold" onClick={() => navigate("/save")}>Email me my rate card</button>
+            <button className="btn-gold" onClick={handleSaveCTA}>Email me my rate card</button>
             <button className="btn-ghost" onClick={() => navigate("/start")}>Start again with different answers</button>
           </div>
 
