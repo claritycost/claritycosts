@@ -2,12 +2,6 @@ import React, { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './Landing.module.css'
 
-const SOCIAL_PROOF = [
-  { stat: '3 mins', label: 'to your rate' },
-  { stat: '£0', label: 'to start' },
-  { stat: '100%', label: 'confidence' },
-]
-
 const PAIN_POINTS = [
   {
     icon: '🤔',
@@ -51,9 +45,7 @@ export default function Landing() {
   useEffect(() => {
     const els = heroRef.current?.querySelectorAll('[data-animate]')
     els?.forEach((el, i) => {
-      el.style.animationDelay = `${i * 120}ms`
-      el.style.animationFillMode = 'both'
-      el.style.animation = `fadeUp 0.6s ease ${i * 120}ms both`
+      el.style.animation = `fadeUp 0.6s ease ${i * 100}ms both`
     })
   }, [])
 
@@ -66,93 +58,84 @@ export default function Landing() {
           <img src="/cc_logo.jpg" alt="Clarity Costs" className={styles.logoMark} />
           <span className={styles.logoText}>Clarity Costs</span>
         </span>
-        <button
-          className={styles.navCta}
-          onClick={() => navigate('/start')}
-        >
-          Get my rate
+        <button className={styles.navCta} onClick={() => navigate('/start')}>
+          Get my rate →
         </button>
       </nav>
 
       {/* ── HERO ── */}
       <section className={styles.hero} ref={heroRef}>
-        <div className={styles.heroBadge} data-animate>
-          <span className={styles.heroBadgeDot} />
-          Free for freelancers in the UK
-        </div>
+        <div className={styles.heroLeft}>
+          <div className={styles.heroBadge} data-animate>
+            <span className={styles.heroBadgeDot} />
+            Free for freelancers in the UK
+          </div>
 
-        <h1 className={styles.heroHeading} data-animate>
-          Stop guessing.<br />
-          <em>Charge what you're worth.</em>
-        </h1>
+          <h1 className={styles.heroHeading} data-animate>
+            Stop guessing.<br />
+            <em>Charge what<br />you're worth.</em>
+          </h1>
 
-        <p className={styles.heroSub} data-animate>
-          Clarity Costs calculates your real freelance rate in 3 minutes — based on your skills, your market, and your life. Then gives you the confidence to say the number out loud.
-        </p>
+          <p className={styles.heroSub} data-animate>
+            Clarity Costs calculates your real freelance rate in 3 minutes — based on your skills, your market, and your life. Then gives you the confidence to say the number out loud.
+          </p>
 
-        <button
-          className={styles.heroCta}
-          data-animate
-          onClick={() => navigate('/start')}
-        >
-          Find out what to charge
-          <span className={styles.heroCtaArrow}>→</span>
-        </button>
+          <div className={styles.heroActions} data-animate>
+            <button className={styles.heroCta} onClick={() => navigate('/start')}>
+              Find out what to charge →
+            </button>
+            <p className={styles.heroSmall}>No sign-up needed. Takes 3 minutes.</p>
+          </div>
 
-        <p className={styles.heroSmall} data-animate>
-          No sign-up needed to start. Takes 3 minutes.
-        </p>
-
-        {/* Social proof pills */}
-        <div className={styles.socialProof} data-animate>
-          {SOCIAL_PROOF.map(({ stat, label }) => (
-            <div key={stat} className={styles.proofPill}>
-              <span className={styles.proofStat}>{stat}</span>
-              <span className={styles.proofLabel}>{label}</span>
+          <div className={styles.socialProof} data-animate>
+            <div className={styles.avatars}>
+              <span className={styles.avatar}>JD</span>
+              <span className={styles.avatar}>SK</span>
+              <span className={styles.avatar}>MP</span>
+              <span className={styles.avatar}>TR</span>
             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── RATE PREVIEW ── */}
-      <section className={styles.preview}>
-        <div className={styles.previewCard}>
-          <div className={styles.previewCardTop}>
-            <span className={styles.previewLabel}>Your rate, based on your answers</span>
-            <div className={styles.previewBlur}>
-              <span className={styles.previewRate}>£<span>485</span></span>
-              <span className={styles.previewUnit}>/day</span>
-            </div>
-            <div className={styles.previewRange}>
-              Recommended range: <strong>£440 – £540/day</strong>
+            <div className={styles.proofText}>
+              <strong>Built for UK freelancers</strong>
+              <span>who are done undercharging</span>
             </div>
           </div>
-          <div className={styles.previewCardBottom}>
-            <div className={styles.previewItem}>
-              <span className={styles.previewItemIcon}>✓</span>
-              Your positioning statement
+        </div>
+
+        <div className={styles.heroRight} data-animate>
+          <div className={styles.previewCard}>
+            <div className={styles.previewCardTop}>
+              <span className={styles.previewLabel}>Your rate, based on your answers</span>
+              <div className={styles.previewBlur}>
+                <span className={styles.previewRate}>£<span>485</span></span>
+                <span className={styles.previewUnit}>/day</span>
+              </div>
+              <div className={styles.previewRange}>
+                Recommended range: <strong>£440 – £540/day</strong>
+              </div>
             </div>
-            <div className={styles.previewItem}>
-              <span className={styles.previewItemIcon}>✓</span>
-              Script for "what do you charge?"
+            <div className={styles.previewCardBottom}>
+              <div className={styles.previewItem}><span className={styles.tick}>✓</span> Your positioning statement</div>
+              <div className={styles.previewItem}><span className={styles.tick}>✓</span> Script for "what do you charge?"</div>
+              <div className={styles.previewItem}><span className={styles.tick}>✓</span> Day rate · project rate · retainer</div>
             </div>
-            <div className={styles.previewItem}>
-              <span className={styles.previewItemIcon}>✓</span>
-              Day rate · project rate · retainer
+            <div className={styles.previewLock}>
+              🔒 Answer 8 questions to unlock your real rate
             </div>
           </div>
-          <div className={styles.previewLock}>
-            <span className={styles.previewLockIcon}>🔒</span>
-            Answer 8 questions to unlock your real rate
+
+          <div className={styles.statRow}>
+            <div className={styles.stat}><span className={styles.statNum}>3 mins</span><span className={styles.statLabel}>to your rate</span></div>
+            <div className={styles.stat}><span className={styles.statNum}>£0</span><span className={styles.statLabel}>to start</span></div>
+            <div className={styles.stat}><span className={styles.statNum}>100%</span><span className={styles.statLabel}>confidence</span></div>
           </div>
         </div>
       </section>
 
       {/* ── PAIN ── */}
-      <section className={styles.section}>
+      <section className={styles.darkSection}>
         <div className={styles.sectionInner}>
-          <p className={styles.eyebrow}>Sound familiar?</p>
-          <h2 className={styles.sectionHeading}>
+          <p className={styles.eyebrowLight}>Sound familiar?</p>
+          <h2 className={styles.headingLight}>
             Undercharging isn't a pricing problem.<br />
             <em>It's a clarity problem.</em>
           </h2>
@@ -169,10 +152,10 @@ export default function Landing() {
       </section>
 
       {/* ── HOW IT WORKS ── */}
-      <section className={styles.section + ' ' + styles.sectionAlt}>
+      <section className={styles.lightSection}>
         <div className={styles.sectionInner}>
           <p className={styles.eyebrow}>How it works</p>
-          <h2 className={styles.sectionHeading}>
+          <h2 className={styles.headingDark}>
             From "I'm not sure" to<br />
             <em>"My rate is £X."</em>
           </h2>
@@ -195,15 +178,9 @@ export default function Landing() {
             Your rate is waiting.<br />
             <em>Go find it.</em>
           </h2>
-          <p className={styles.finalCtaSub}>
-            3 minutes. No fluff. Just your number.
-          </p>
-          <button
-            className={styles.heroCta}
-            onClick={() => navigate('/start')}
-          >
-            Start now — it's free
-            <span className={styles.heroCtaArrow}>→</span>
+          <p className={styles.finalCtaSub}>3 minutes. No fluff. Just your number.</p>
+          <button className={styles.heroCta} onClick={() => navigate('/start')}>
+            Start now — it's free →
           </button>
         </div>
       </section>
@@ -214,12 +191,8 @@ export default function Landing() {
           <img src="/cc_logo.jpg" alt="Clarity Costs" className={styles.logoMark} />
           <span className={styles.logoText}>Clarity Costs</span>
         </span>
-        <p className={styles.footerTagline}>
-          Built for UK freelancers who are done undercharging.
-        </p>
-        <p className={styles.footerSmall}>
-          © {new Date().getFullYear()} Clarity Costs · claritycosts.co.uk
-        </p>
+        <p className={styles.footerTagline}>Built for UK freelancers who are done undercharging.</p>
+        <p className={styles.footerSmall}>© {new Date().getFullYear()} Clarity Costs · claritycosts.co.uk</p>
       </footer>
 
     </div>
