@@ -409,20 +409,20 @@
   background: var(--white);
   border: 1px solid var(--indigo-100);
   border-radius: var(--radius-md);
-  padding: 22px 20px 22px 56px;
-  margin-bottom: 12px;
+  padding: 22px 20px;
+  margin-bottom: 0;
   position: relative;
   box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
 }
 
 .stepNum {
-  position: absolute;
-  left: 16px;
-  top: 22px;
   font-family: var(--font-display);
   font-size: 13px;
   font-style: italic;
   color: var(--indigo-400);
+  margin-bottom: 10px;
 }
 
 .stepTitle {
@@ -519,4 +519,19 @@
 .footerSmall {
   font-size: 12px;
   color: var(--slate-300);
+}
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  .painGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .stepsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .sectionInner {
+    max-width: 100%;
+  }
 }
