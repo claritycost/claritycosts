@@ -45,7 +45,7 @@ export default function Landing() {
   useEffect(() => {
     const els = heroRef.current?.querySelectorAll('[data-animate]')
     els?.forEach((el, i) => {
-      el.style.animation = `fadeUp 0.6s ease ${i * 100}ms both`
+      el.style.animation = `fadeUp 0.6s ease ${i * 120}ms both`
     })
   }, [])
 
@@ -65,7 +65,7 @@ export default function Landing() {
 
       {/* ── HERO ── */}
       <section className={styles.hero} ref={heroRef}>
-        <div className={styles.heroLeft}>
+        <div className={styles.heroInner}>
           <div className={styles.heroBadge} data-animate>
             <span className={styles.heroBadgeDot} />
             Free for freelancers in the UK
@@ -73,14 +73,14 @@ export default function Landing() {
 
           <h1 className={styles.heroHeading} data-animate>
             Stop guessing.<br />
-            <em>Charge what<br />you're worth.</em>
+            <em>Charge what you're worth.</em>
           </h1>
 
           <p className={styles.heroSub} data-animate>
             Clarity Costs calculates your real freelance rate in 3 minutes — based on your skills, your market, and your life. Then gives you the confidence to say the number out loud.
           </p>
 
-          <div className={styles.heroActions} data-animate>
+          <div className={styles.heroCtaRow} data-animate>
             <button className={styles.heroCta} onClick={() => navigate('/start')}>
               Find out what to charge →
             </button>
@@ -101,7 +101,7 @@ export default function Landing() {
           </div>
         </div>
 
-        <div className={styles.heroRight} data-animate>
+        <div className={styles.previewWrap} data-animate>
           <div className={styles.previewCard}>
             <div className={styles.previewCardTop}>
               <span className={styles.previewLabel}>Your rate, based on your answers</span>
@@ -122,7 +122,6 @@ export default function Landing() {
               🔒 Answer 8 questions to unlock your real rate
             </div>
           </div>
-
           <div className={styles.statRow}>
             <div className={styles.stat}><span className={styles.statNum}>3 mins</span><span className={styles.statLabel}>to your rate</span></div>
             <div className={styles.stat}><span className={styles.statNum}>£0</span><span className={styles.statLabel}>to start</span></div>
