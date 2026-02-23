@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const STORAGE_KEY = "claritycosts_results";
+const STORAGE_KEY = "cc_ratecard";
 
 export default function Save() {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ export default function Save() {
 
   useEffect(() => {
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
+      const stored = sessionStorage.getItem(STORAGE_KEY);
       if (stored) {
         const parsed = JSON.parse(stored);
         setRateCard(parsed);
@@ -21,7 +21,8 @@ export default function Save() {
       } else {
         setDataStatus("missing");
       }
-    } catch {
+    } catch (err) {
+      console.error("Save page error:", err);
       setDataStatus("missing");
     }
   }, []);
@@ -49,10 +50,7 @@ export default function Save() {
   if (dataStatus === "loading") {
     return (
       <div style={styles.page}>
-        <div style={styles.bgNoise} />
-        <div style={{ ...styles.container, textAlign: "center", paddingTop: 80 }}>
-          <p style={{ color: "rgba(245,240,232,0.4)", fontSize: 14 }}>Loading…</p>
-        </div>
+        <p style={{ color: "rgba(245,240,232,0.4)", fontSize: 16 }}>Loading…</p>
       </div>
     );
   }
@@ -60,14 +58,13 @@ export default function Save() {
   if (dataStatus === "missing") {
     return (
       <div style={styles.page}>
-        <div style={styles.bgNoise} />
         <div style={styles.container}>
           <a href="/" style={styles.logo}>Clarity<span style={styles.logoAccent}>Costs</span></a>
           <div style={styles.card}>
             <div style={styles.cardBody}>
-              <h1 style={{ ...styles.heading, fontSize: 22, marginBottom: 12 }}>Your session has expired</h1>
+              <h1 style={{ ...styles.heading, fontSize: 24, marginBottom: 14 }}>Session expired</h1>
               <p style={styles.subheading}>
-                Your rate card isn't in this browser session any more. Please go through the questionnaire again — it only takes two minutes.
+                Your rate card is no longer in this browser session. Please go through the questionnaire again — it only takes two minutes.
               </p>
               <button style={styles.button} onClick={() => navigate("/start")}>
                 Start the questionnaire
@@ -81,7 +78,6 @@ export default function Save() {
 
   return (
     <div style={styles.page}>
-      <div style={styles.bgNoise} />
       <div style={styles.container}>
         <a href="/" style={styles.logo}>Clarity<span style={styles.logoAccent}>Costs</span></a>
         {status === "success" ? (
@@ -169,23 +165,22 @@ function SuccessScreen({ email }) {
 }
 
 const styles = {
-  page: { minHeight: "100vh", background: "#0F0E0C", display: "flex", alignItems: "center", justifyContent: "center", padding: "40px 20px", fontFamily: "'DM Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif", position: "relative", overflow: "hidden" },
-  bgNoise: { position: "fixed", inset: 0, background: "radial-gradient(ellipse 80% 60% at 20% 10%, rgba(245,230,200,0.04) 0%, transparent 60%), radial-gradient(ellipse 60% 80% at 80% 90%, rgba(245,230,200,0.03) 0%, transparent 60%)", pointerEvents: "none", zIndex: 0 },
-  container: { width: "100%", maxWidth: 520, position: "relative", zIndex: 1 },
+  page: { minHeight: "100vh", background: "#0F0E0C", display: "flex", alignItems: "center", justifyContent: "center", padding: "40px 20px", fontFamily: "'DM Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif" },
+  container: { width: "100%", maxWidth: 520 },
   logo: { display: "block", textAlign: "center", marginBottom: 36, fontSize: 24, fontWeight: 700, letterSpacing: "-0.5px", color: "#F5F0E8", textDecoration: "none" },
   logoAccent: { color: "#F5E6C8" },
   card: { background: "#1A1916", border: "1px solid rgba(245,230,200,0.12)", borderRadius: 16, overflow: "hidden" },
   previewStrip: { background: "rgba(245,230,200,0.05)", borderBottom: "1px solid rgba(245,230,200,0.1)", padding: "22px 28px", display: "flex", flexDirection: "column", gap: 12 },
   previewRow: { display: "flex", justifyContent: "space-between", alignItems: "center" },
   previewLabel: { fontSize: 14, color: "rgba(245,240,232,0.5)", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 500 },
-  previewValue: { fontSize: 17, fontWeight: 600, color: "#F5E6C8", letterSpacing: "-0.2px" },
+  previewValue: { fontSize: 17, fontWeight: 600, color: "#F5E6C8" },
   cardBody: { padding: "36px 28px 32px" },
   eyebrow: { fontSize: 13, fontWeight: 600, color: "#C8A96E", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 12px 0" },
   heading: { fontSize: 32, fontWeight: 700, color: "#F5F0E8", letterSpacing: "-0.8px", lineHeight: 1.15, margin: "0 0 14px 0" },
   subheading: { fontSize: 16, lineHeight: 1.65, color: "rgba(245,240,232,0.6)", margin: "0 0 28px 0" },
   form: { display: "flex", flexDirection: "column", gap: 12 },
   input: { width: "100%", padding: "15px 16px", fontSize: 17, background: "rgba(245,230,200,0.06)", border: "1px solid rgba(245,230,200,0.18)", borderRadius: 10, color: "#F5F0E8", outline: "none", boxSizing: "border-box", fontFamily: "inherit" },
-  button: { display: "flex", alignItems: "center", justifyContent: "center", padding: "16px 24px", fontSize: 17, fontWeight: 600, background: "#F5E6C8", color: "#0F0E0C", border: "none", borderRadius: 10, cursor: "pointer", fontFamily: "inherit", letterSpacing: "-0.2px" },
+  button: { display: "flex", alignItems: "center", justifyContent: "center", padding: "16px 24px", fontSize: 17, fontWeight: 600, background: "#F5E6C8", color: "#0F0E0C", border: "none", borderRadius: 10, cursor: "pointer", fontFamily: "inherit" },
   buttonDisabled: { opacity: 0.5, cursor: "not-allowed" },
   errorText: { fontSize: 15, color: "#E87060", margin: 0 },
   privacy: { fontSize: 13, color: "rgba(245,240,232,0.3)", lineHeight: 1.6, margin: "16px 0 0 0" },
