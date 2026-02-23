@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-// ─── Styles ─────────────────────────────────────────────────────────────────
 const styles = `
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -19,7 +18,6 @@ const styles = `
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--paper); color: var(--ink); font-family: 'DM Sans', sans-serif; -webkit-font-smoothing: antialiased; }
 
-  /* ── Wordmark bar ── */
   .wm-bar {
     display: flex; align-items: center; justify-content: space-between;
     padding: 1rem 1.25rem; background: var(--card); border-bottom: 1px solid var(--rule);
@@ -27,7 +25,6 @@ const styles = `
   .wm { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 600; letter-spacing: 0.04em; }
   .wm-date { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
 
-  /* ── Hero ── */
   .hero {
     background: var(--dark); padding: 2.75rem 1.5rem 2.25rem; text-align: center;
     position: relative; overflow: hidden;
@@ -52,7 +49,6 @@ const styles = `
     max-width: 380px; margin: 0 auto; font-weight: 300;
   }
 
-  /* ── Sections ── */
   .body { max-width: 600px; margin: 0 auto; padding: 0 1.25rem 2rem; }
 
   .section-head {
@@ -60,7 +56,6 @@ const styles = `
     color: var(--muted); margin: 2rem 0 0.85rem;
   }
 
-  /* ── Rate cards ── */
   .rate-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; }
 
   .rate-card {
@@ -84,7 +79,6 @@ const styles = `
   .rc-divider { width: 20px; height: 1px; background: var(--rule); margin: 0.75rem 0; }
   .rate-card.primary .rc-divider { background: rgba(255,255,255,0.1); }
 
-  /* ── Text cards ── */
   .text-card { background: var(--card); border: 1px solid var(--rule); border-radius: 4px; padding: 1.4rem 1.2rem; margin-bottom: 0.65rem; }
 
   .tc-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.85rem; }
@@ -116,7 +110,6 @@ const styles = `
   .insight-label { font-size: 0.66rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dark); margin-bottom: 0.4rem; opacity: 0.6; }
   .insight-text { font-size: 0.88rem; line-height: 1.65; color: var(--dark); font-weight: 500; }
 
-  /* ── CTA ── */
   .cta-section { text-align: center; padding: 2rem 0 3rem; }
   .cta-rule { width: 36px; height: 2px; background: var(--gold); margin: 0 auto 1.4rem; }
   .cta-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 600; margin-bottom: 0.45rem; }
@@ -136,7 +129,6 @@ const styles = `
   }
   .btn-ghost:hover { color: var(--ink); }
 
-  /* ── Loading ── */
   .loading-screen {
     min-height: 100vh; background: var(--dark); display: flex; flex-direction: column;
     align-items: center; justify-content: center; gap: 1.25rem;
@@ -148,7 +140,6 @@ const styles = `
   @keyframes pulse { 0%,80%,100% { opacity:0.2; transform:scale(0.8); } 40% { opacity:1; transform:scale(1); } }
   .loading-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.2rem; color: rgba(255,255,255,0.65); }
 
-  /* ── Error ── */
   .error-screen {
     min-height: 100vh; display: flex; flex-direction: column;
     align-items: center; justify-content: center; padding: 2rem; text-align: center;
@@ -156,7 +147,6 @@ const styles = `
   .error-title { font-family: 'Playfair Display', serif; font-size: 1.45rem; margin-bottom: 0.65rem; }
   .error-sub { font-size: 0.88rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.5rem; max-width: 300px; }
 
-  /* ── Animations ── */
   .reveal { animation: revealUp 0.45s ease both; }
   .d1 { animation-delay: 0.05s; }
   .d2 { animation-delay: 0.1s; }
@@ -166,10 +156,8 @@ const styles = `
   @keyframes revealUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
 `;
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
 const gbp = (n) => `£${Number(n).toLocaleString("en-GB")}`;
 
-// ─── Component ───────────────────────────────────────────────────────────────
 export default function Results() {
   const navigate = useNavigate();
   const [data, setData] = useState(null);
@@ -210,22 +198,20 @@ export default function Results() {
     });
   };
 
-  // ── Navigate to /save, passing rate card via localStorage ──
   const handleSaveCTA = () => {
-    localStorage.setItem("claritycosts_results", JSON.stringify({
+    sessionStorage.setItem("cc_ratecard", JSON.stringify({
       dayRate:              gbp(data.dayRate),
-      projectRate:         gbp(data.projectRate),
-      retainerRate:        gbp(data.retainerRate),
+      projectRate:          gbp(data.projectRate),
+      retainerRate:         gbp(data.retainerRate),
       positioningStatement: data.positioningStatement,
-      chargeScript:        data.chargeScript,
-      submissionId:        data.submissionId || null,
+      chargeScript:         data.chargeScript,
+      submissionId:         data.submissionId || null,
     }));
     navigate("/save");
   };
 
   const today = new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
 
-  // ── Loading ──
   if (status === "loading") {
     return (
       <>
@@ -240,7 +226,6 @@ export default function Results() {
     );
   }
 
-  // ── Error ──
   if (status === "error") {
     return (
       <>
@@ -262,18 +247,15 @@ export default function Results() {
     positioningStatement, chargeScript, rationale, headline, confidenceTip,
   } = data;
 
-  // ── Results ──
   return (
     <>
       <style>{styles}</style>
       <div>
-        {/* Wordmark bar */}
         <div className="wm-bar">
           <span className="wm">Clarity Costs</span>
           <span className="wm-date">{today}</span>
         </div>
 
-        {/* Hero */}
         <div className="hero reveal">
           <div className="hero-badge">Your Rate Card</div>
           <h1 className="hero-headline">{headline || "Your rates are ready."}</h1>
@@ -282,11 +264,9 @@ export default function Results() {
 
         <div className="body">
 
-          {/* Rate cards */}
           <p className="section-head reveal d1">Your rates</p>
           <div className="rate-grid reveal d1">
 
-            {/* Day rate — primary */}
             <div className="rate-card primary">
               <p className="rc-label">Day Rate</p>
               <p className="rc-amount">{gbp(dayRate)}</p>
@@ -300,7 +280,6 @@ export default function Results() {
               </p>
             </div>
 
-            {/* Project */}
             <div className="rate-card">
               <p className="rc-label">Project Rate</p>
               <p className="rc-amount sm">{gbp(projectRate)}</p>
@@ -310,7 +289,6 @@ export default function Results() {
               )}
             </div>
 
-            {/* Retainer */}
             <div className="rate-card">
               <p className="rc-label">Monthly Retainer</p>
               <p className="rc-amount sm">{gbp(retainerRate)}</p>
@@ -321,7 +299,6 @@ export default function Results() {
             </div>
           </div>
 
-          {/* Positioning statement */}
           <p className="section-head reveal d2">How to position yourself</p>
           <div className="text-card reveal d2">
             <div className="tc-head">
@@ -333,7 +310,6 @@ export default function Results() {
             <p className="quote-text">"{positioningStatement}"</p>
           </div>
 
-          {/* Charge script */}
           <p className="section-head reveal d3">When someone asks "what do you charge?"</p>
           <div className="text-card reveal d3">
             <div className="tc-head">
@@ -345,7 +321,6 @@ export default function Results() {
             <p className="script-text">{chargeScript}</p>
           </div>
 
-          {/* Confidence tip band */}
           {confidenceTip && (
             <div className="insight-band reveal d4">
               <p className="insight-label">One thing to remember</p>
@@ -353,7 +328,6 @@ export default function Results() {
             </div>
           )}
 
-          {/* CTA */}
           <div className="cta-section reveal d5">
             <div className="cta-rule" />
             <h2 className="cta-title">Save your rate card</h2>
