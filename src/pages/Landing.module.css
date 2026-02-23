@@ -1,9 +1,8 @@
-/* ── RESET & PAGE ── */
+/* ── PAGE ── */
 .page {
   min-height: 100dvh;
   background: #ffffff;
   overflow-x: hidden;
-  font-family: 'DM Sans', sans-serif;
 }
 
 /* ── NAV ── */
@@ -14,7 +13,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 48px;
+  padding: 14px 40px;
   background: rgba(255,255,255,0.95);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid #e8eaf0;
@@ -49,7 +48,6 @@
   padding: 12px 24px;
   font-size: 15px;
   font-weight: 600;
-  letter-spacing: -0.01em;
   transition: background 0.2s, transform 0.15s;
 }
 
@@ -60,19 +58,20 @@
 
 /* ── HERO ── */
 .hero {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  align-items: center;
-  padding: 80px 48px 80px;
-  background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 60%);
-  min-height: 85vh;
-}
-
-.heroLeft {
+  padding: 80px 40px 72px;
+  background: linear-gradient(160deg, #f0f1ff 0%, #ffffff 55%);
   display: flex;
   flex-direction: column;
-  gap: 0;
+  align-items: center;
+}
+
+.heroInner {
+  max-width: 860px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .heroBadge {
@@ -82,12 +81,11 @@
   background: #eef2ff;
   border: 1px solid #c7d2fe;
   border-radius: 100px;
-  padding: 8px 16px;
+  padding: 8px 18px;
   font-size: 14px;
   font-weight: 500;
   color: #4f46e5;
-  margin-bottom: 28px;
-  width: fit-content;
+  margin-bottom: 32px;
   opacity: 0;
 }
 
@@ -110,10 +108,10 @@
 
 .heroHeading {
   font-family: var(--font-display);
-  font-size: clamp(48px, 5.5vw, 72px);
+  font-size: clamp(48px, 7vw, 80px);
   font-weight: 800;
   line-height: 1.05;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.04em;
   color: #0f172a;
   margin-bottom: 24px;
   opacity: 0;
@@ -121,25 +119,25 @@
 
 .heroHeading em {
   font-style: italic;
-  font-weight: 800;
   color: #4f46e5;
 }
 
 .heroSub {
-  font-size: clamp(16px, 1.8vw, 19px);
+  font-size: clamp(17px, 2vw, 20px);
   line-height: 1.7;
   color: #475569;
   font-weight: 400;
-  max-width: 480px;
-  margin-bottom: 36px;
+  max-width: 620px;
+  margin-bottom: 40px;
   opacity: 0;
 }
 
-.heroActions {
+.heroCtaRow {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 12px;
-  margin-bottom: 40px;
+  margin-bottom: 44px;
   opacity: 0;
 }
 
@@ -150,31 +148,29 @@
   background: #4f46e5;
   color: #ffffff;
   border-radius: 100px;
-  padding: 18px 36px;
-  font-size: 17px;
+  padding: 18px 40px;
+  font-size: 18px;
   font-weight: 600;
   letter-spacing: -0.01em;
-  box-shadow: 0 4px 20px rgba(79,70,229,0.35);
+  box-shadow: 0 4px 24px rgba(79,70,229,0.35);
   transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-  width: fit-content;
-  opacity: 0;
 }
 
 .heroCta:hover {
   background: #4338ca;
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(79,70,229,0.4);
+  box-shadow: 0 8px 32px rgba(79,70,229,0.4);
 }
 
 .heroSmall {
   font-size: 13px;
   color: #94a3b8;
-  font-weight: 400;
 }
 
 .socialProof {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 14px;
   opacity: 0;
 }
@@ -198,14 +194,13 @@
   border: 2px solid white;
 }
 
-.avatar:first-child {
-  margin-left: 0;
-}
+.avatar:first-child { margin-left: 0; }
 
 .proofText {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  text-align: left;
 }
 
 .proofText strong {
@@ -219,11 +214,14 @@
   color: #64748b;
 }
 
-/* ── HERO RIGHT ── */
-.heroRight {
+/* ── PREVIEW CARD ── */
+.previewWrap {
+  max-width: 520px;
+  width: 100%;
+  margin-top: 60px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
   opacity: 0;
 }
 
@@ -231,7 +229,7 @@
   background: #ffffff;
   border: 1.5px solid #e2e8f0;
   border-radius: 20px;
-  box-shadow: 0 20px 60px rgba(15,23,42,0.1);
+  box-shadow: 0 24px 64px rgba(15,23,42,0.1);
   overflow: hidden;
 }
 
@@ -296,7 +294,6 @@
   gap: 12px;
   font-size: 15px;
   color: #334155;
-  font-weight: 400;
 }
 
 .tick {
@@ -354,7 +351,7 @@
 /* ── DARK SECTION ── */
 .darkSection {
   background: linear-gradient(135deg, #1e1b4b 0%, #1e293b 100%);
-  padding: 96px 48px;
+  padding: 96px 40px;
 }
 
 .sectionInner {
@@ -440,7 +437,6 @@
   font-weight: 600;
   color: #ffffff;
   margin-bottom: 8px;
-  letter-spacing: -0.01em;
 }
 
 .painBody {
@@ -452,10 +448,9 @@
 /* ── LIGHT SECTION ── */
 .lightSection {
   background: #f8f9ff;
-  padding: 96px 48px;
+  padding: 96px 40px;
 }
 
-/* Steps grid */
 .stepsGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -486,7 +481,6 @@
   font-weight: 600;
   color: #0f172a;
   margin-bottom: 8px;
-  letter-spacing: -0.01em;
 }
 
 .stepBody {
@@ -498,12 +492,12 @@
 /* ── FINAL CTA ── */
 .finalCta {
   background: linear-gradient(135deg, #4f46e5 0%, #312e81 100%);
-  padding: 96px 48px;
+  padding: 96px 40px;
   text-align: center;
 }
 
 .finalCtaInner {
-  max-width: 600px;
+  max-width: 640px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -513,7 +507,7 @@
 
 .finalCtaHeading {
   font-family: var(--font-display);
-  font-size: clamp(36px, 5vw, 56px);
+  font-size: clamp(36px, 5vw, 60px);
   font-weight: 800;
   line-height: 1.08;
   letter-spacing: -0.035em;
@@ -528,24 +522,21 @@
 .finalCtaSub {
   font-size: 17px;
   color: rgba(255,255,255,0.65);
-  font-weight: 400;
 }
 
 .finalCta .heroCta {
   background: #ffffff;
   color: #4f46e5;
   box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-  opacity: 1;
 }
 
 .finalCta .heroCta:hover {
   background: #f0f0ff;
-  transform: translateY(-2px);
 }
 
 /* ── FOOTER ── */
 .footer {
-  padding: 40px 48px;
+  padding: 40px;
   text-align: center;
   border-top: 1px solid #e2e8f0;
   display: flex;
@@ -554,9 +545,7 @@
   gap: 8px;
 }
 
-.footer .logo {
-  justify-content: center;
-}
+.footer .logo { justify-content: center; }
 
 .footerTagline {
   font-size: 14px;
@@ -570,47 +559,25 @@
 
 /* ── MOBILE ── */
 @media (max-width: 768px) {
-  .nav {
-    padding: 14px 20px;
-  }
+  .nav { padding: 14px 20px; }
 
-  .hero {
-    grid-template-columns: 1fr;
-    padding: 48px 20px 56px;
-    min-height: auto;
-    gap: 40px;
-  }
+  .hero { padding: 48px 20px 56px; }
 
-  .heroHeading {
-    font-size: clamp(40px, 10vw, 56px);
-  }
-
-  .heroRight {
-    opacity: 1;
-  }
+  .heroHeading { font-size: clamp(40px, 10vw, 56px); }
 
   .darkSection,
   .lightSection,
-  .finalCta {
-    padding: 64px 20px;
-  }
+  .finalCta { padding: 64px 20px; }
 
-  .footer {
-    padding: 36px 20px;
-  }
+  .footer { padding: 36px 20px; }
 
   .painGrid,
-  .stepsGrid {
-    grid-template-columns: 1fr;
-  }
+  .stepsGrid { grid-template-columns: 1fr; }
 
-  .sectionInner {
-    max-width: 100%;
-  }
+  .sectionInner,
+  .finalCtaInner { max-width: 100%; }
 
-  .finalCtaInner {
-    max-width: 100%;
-  }
+  .previewWrap { margin-top: 40px; }
 }
 
 @keyframes fadeUp {
