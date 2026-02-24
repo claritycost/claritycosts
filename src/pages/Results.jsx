@@ -102,8 +102,6 @@ const styles = `
     border-left: 3px solid var(--gold); padding-left: 1rem;
   }
 
-  .rationale-text { font-size: 0.88rem; line-height: 1.7; color: #5a5040; }
-
   .insight-band {
     background: var(--gold); border-radius: 4px; padding: 1.1rem 1.2rem; margin-bottom: 0.65rem;
   }
@@ -156,7 +154,10 @@ const styles = `
   @keyframes revealUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
 `;
 
-const gbp = (n) => `£${Number(n).toLocaleString("en-GB")}`;
+const gbp = (n) => {
+  if (typeof n === "string" && n.includes("£")) return n;
+  return `£${Number(n).toLocaleString("en-GB")}`;
+};
 
 export default function Results() {
   const navigate = useNavigate();
@@ -199,21 +200,18 @@ export default function Results() {
   };
 
   const handleSaveCTA = () => {
-    // Rates from GPT come pre-formatted as strings (e.g. "£450")
-    // so we store them directly without calling gbp()
-    const fmt = (val) => {
-      if (typeof val === "string" && val.includes("£")) return val;
-      return gbp(val);
-    };
-    sessionStorage.setItem("cc_ratecard", JSON.stringify({
-      dayRate:              fmt(data.dayRate),
-      projectRate:          fmt(data.projectRate),
-      retainerRate:         fmt(data.retainerRate),
-      positioningStatement: data.positioningStatement,
-      chargeScript:         data.chargeScript,
-      submissionId:         data.submissionId || null,
-    }));
-    navigate("/save");
+    navigate("/save", {
+      state: {
+        rateCard: {
+          dayRate:              gbp(data.dayRate),
+          projectRate:          gbp(data.projectRate),
+          retainerRate:         gbp(data.retainerRate),
+          positioningStatement: data.positioningStatement,
+          chargeScript:         data.chargeScript,
+          submissionId:         data.submissionId || null,
+        }
+      }
+    });
   };
 
   const today = new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
@@ -337,7 +335,7 @@ export default function Results() {
           <div className="cta-section reveal d5">
             <div className="cta-rule" />
             <h2 className="cta-title">Save your rate card</h2>
-            <p className="cta-sub">Get this sent to your inbox as a PDF, plus a guide to raising rates with existing clients.</p>
+            <p className="cta-sub">Get this sent to your inbox — day rate, project rate, retainer, positioning statement, and your charge script.</p>
             <button className="btn-gold" onClick={handleSaveCTA}>Email me my rate card</button>
             <button className="btn-ghost" onClick={() => navigate("/start")}>Start again with different answers</button>
           </div>
