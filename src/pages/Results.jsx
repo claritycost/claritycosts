@@ -199,10 +199,16 @@ export default function Results() {
   };
 
   const handleSaveCTA = () => {
+    // Rates from GPT come pre-formatted as strings (e.g. "£450")
+    // so we store them directly without calling gbp()
+    const fmt = (val) => {
+      if (typeof val === "string" && val.includes("£")) return val;
+      return gbp(val);
+    };
     sessionStorage.setItem("cc_ratecard", JSON.stringify({
-      dayRate:              gbp(data.dayRate),
-      projectRate:          gbp(data.projectRate),
-      retainerRate:         gbp(data.retainerRate),
+      dayRate:              fmt(data.dayRate),
+      projectRate:          fmt(data.projectRate),
+      retainerRate:         fmt(data.retainerRate),
       positioningStatement: data.positioningStatement,
       chargeScript:         data.chargeScript,
       submissionId:         data.submissionId || null,
