@@ -22,42 +22,37 @@ export default async function handler(req, res) {
   try {
     let finalSubmissionId = submissionId
 
-    // If no existing submission, save one now so we can retrieve it on success
+    // If no existing submission, save one now
     if (!finalSubmissionId && rateCardData) {
       const { data, error } = await supabase
         .from('submissions')
-        .insert([
-          {
-            email,
-            answers: answers || {},
-            rates: rateCardData,
-            created_at: new Date().toISOString(),
-          },
-        ])
+        .insert([{
+          answers: answers || { email },
+          rate_card: rateCardData,
+          created_at: new Date().toISOString(),
+        }])
         .select('id')
         .single()
 
       if (error) {
         console.error('Supabase insert error:', error)
-        // Non-fatal — proceed without ID
       } else {
         finalSubmissionId = data.id
       }
     }
 
-    const successUrl = `${process.env.NEXT_PUBLIC_BASE_URL || `https://${req.headers.host}`}/success?session_id={CHECKOUT_SESSION_ID}`
-    const cancelUrl = `${process.env.NEXT_PUBLIC_BASE_URL || `https://${req.headers.host}`}/upgrade`
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || `https://${req.headers.host}`
+    const successUrl = `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}`
+    const cancelUrl = `${baseUrl}/upgrade`
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
       customer_email: email,
-      line_items: [
-        {
-          price: process.env.STRIPE_PRICE_ID,
-          quantity: 1,
-        },
-      ],
+      line_items: [{
+        price: process.env.STRIPE_PRICE_ID,
+        quantity: 1,
+      }],
       metadata: {
         email,
         submissionId: finalSubmissionId || '',

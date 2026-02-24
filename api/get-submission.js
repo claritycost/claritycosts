@@ -19,7 +19,7 @@ export default async function handler(req, res) {
   try {
     const { data, error } = await supabase
       .from('submissions')
-      .select('id, rates, answers, created_at')
+      .select('id, rate_card, answers, created_at')
       .eq('id', id)
       .single()
 
@@ -27,12 +27,11 @@ export default async function handler(req, res) {
       return res.status(404).json({ error: 'Rate card not found' })
     }
 
-    // Return only public-safe fields — no email
     return res.status(200).json({
       id: data.id,
-      rates: data.rates,
+      rates: data.rate_card,
       createdAt: data.created_at,
-      specialty: data.answers?.specialty || data.answers?.[0] || null,
+      specialty: data.answers?.discipline || data.answers?.specialty || null,
     })
   } catch (err) {
     console.error('Get submission error:', err)

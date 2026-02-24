@@ -21,7 +21,7 @@ export default async function handler(req, res) {
   try {
     const { data, error } = await supabase
       .from('submissions')
-      .select('id, email, rates, answers, created_at, paid, paid_at')
+      .select('id, answers, rate_card, created_at, paid, paid_at')
       .order('created_at', { ascending: false })
 
     if (error) {
@@ -29,7 +29,18 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'Database error' })
     }
 
-    return res.status(200).json({ submissions: data || [] })
+    // Normalise for the admin dashboard
+    const submissions = (data || []).map(row => ({
+      id: row.id,
+      email: row.answers?.email || '—',
+      answers: row.answers,
+      rates: row.rate_card,
+      created_at: row.created_at,
+      paid: row.paid || false,
+      paid_at: row.paid_at,
+    }))
+
+    return res.status(200).json({ submissions })
   } catch (err) {
     console.error('Get submissions error:', err)
     return res.status(500).json({ error: err.message })
