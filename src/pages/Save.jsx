@@ -156,4 +156,3 @@ const s = {
   successNext: { fontSize: 16, lineHeight: 1.65, color: "rgba(245,240,232,0.65)", margin: "0 0 28px 0" },
   successLink: { display: "inline-block", fontSize: 15, color: "#C8A96E", textDecoration: "none", borderBottom: "1px solid rgba(200,169,110,0.4)", paddingBottom: 2 },
 };
-
