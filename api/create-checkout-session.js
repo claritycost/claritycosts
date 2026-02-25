@@ -1,7 +1,9 @@
 import Stripe from 'stripe'
 import { createClient } from '@supabase/supabase-js'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+  apiVersion: '2023-10-16',
+})
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -22,7 +24,6 @@ export default async function handler(req, res) {
   try {
     let finalSubmissionId = submissionId
 
-    // If no existing submission, save one now
     if (!finalSubmissionId && rateCardData) {
       const { data, error } = await supabase
         .from('submissions')
@@ -45,6 +46,8 @@ export default async function handler(req, res) {
     const successUrl = `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}`
     const cancelUrl = `${baseUrl}/upgrade`
 
+    console.log('Creating Stripe session with price:', process.env.STRIPE_PRICE_ID)
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
@@ -63,7 +66,7 @@ export default async function handler(req, res) {
 
     return res.status(200).json({ url: session.url })
   } catch (err) {
-    console.error('Stripe checkout error:', err)
+    console.error('Stripe checkout error:', err.message, err.type, err.code)
     return res.status(500).json({ error: err.message || 'Failed to create checkout session' })
   }
 }
