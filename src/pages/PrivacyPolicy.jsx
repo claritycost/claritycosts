@@ -4,7 +4,7 @@ export default function PrivacyPolicy() {
   return (
     <PolicyLayout title="Privacy Policy" lastUpdated="1 March 2026">
       <h2>Who we are</h2>
-      <p>Clarity Costs is operated by Hello Clarity Ltd, registered in England and Wales. We run the rate calculator at <strong>claritycosts.co.uk</strong>. Questions? <a href="mailto:hello@claritycosts.co.uk">hello@claritycosts.co.uk</a></p>
+      <p>Clarity Costs is operated by Hello Clarity Ltd, registered in England and Wales. Our registered address is 5 St Helens Road, Erith, Kent, DA18 4DX. We run the rate calculator at <strong>claritycosts.co.uk</strong>. Questions? <a href="mailto:hello@claritycosts.co.uk">hello@claritycosts.co.uk</a></p>
 
       <h2>What information we collect</h2>
       <h3>Information you give us</h3>

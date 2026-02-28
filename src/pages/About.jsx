@@ -12,10 +12,10 @@ const MUTED = 'rgba(255,255,255,0.48)'
 const INFO_ROWS = [
   ['Trading name','Clarity Costs'],
   ['Legal entity','Hello Clarity Ltd'],
-  ['Company number','[UPDATE THIS]'],
-  ['Registered address','[UPDATE THIS]'],
+  ['Company number','[To be confirmed]'],
+  ['Registered address','5 St Helens Road, Erith, Kent, DA18 4DX'],
   ['Country of incorporation','England and Wales'],
-  ['VAT number','[If registered — otherwise remove this row]'],
+  
   ['Email','hello@claritycosts.co.uk'],
   ['Website','claritycosts.co.uk'],
 ]
@@ -94,11 +94,7 @@ export default function About() {
         </div>
 
         {/* Warning */}
-        <div style={{ background:'rgba(245,158,11,0.07)', border:'1px solid rgba(245,158,11,0.2)', borderRadius:'12px', padding:'16px 18px', marginBottom:'28px', animation:'fadeUp 0.4s 0.24s ease both' }}>
-          <p style={{ fontFamily:'Inter', fontSize:'13px', color:'rgba(245,158,11,0.9)', lineHeight:'1.6', margin:0 }}>
-            <strong style={{ color:'#f59e0b' }}>⚠️ Action required:</strong> Update the fields marked in amber above (company number, registered address, VAT number) before publishing. These are required for UK legal compliance.
-          </p>
-        </div>
+        
 
         {/* Legal links */}
         <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(190px,1fr))', gap:'9px', animation:'fadeUp 0.4s 0.28s ease both' }}>
