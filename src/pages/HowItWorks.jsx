@@ -34,7 +34,7 @@ function Nav() {
     <header style={{ position:'fixed', top:0, left:0, right:0, zIndex:100, background:'rgba(255,255,255,0.97)', borderBottom:`1px solid ${BORDER}`, boxShadow: scrolled?'0 1px 12px rgba(0,0,0,0.06)':'none', transition:'box-shadow 0.25s' }}>
       <div style={{ maxWidth:1200, margin:'0 auto', padding:'0 24px', height:68, display:'flex', alignItems:'center', justifyContent:'space-between' }}>
         <Link to="/" style={{ textDecoration:'none' }}>
-          <img src="/logo.png" alt="Clarity Costs" style={{ height:34, width:'auto', display:'block' }} />
+          <img src="/logo.png" alt="Clarity Costs" style={{ height:52, width:'auto', display:'block' }} />
         </Link>
         <nav style={{ display:'flex', gap:28, alignItems:'center' }}>
           {[{l:'How It Works',t:'/how-it-works'},{l:'Pricing',t:'/pricing'},{l:'About',t:'/about'}].map(({l,t}) =>

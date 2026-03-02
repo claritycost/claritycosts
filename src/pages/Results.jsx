@@ -101,7 +101,7 @@ export default function Results() {
       <header style={{
         position: 'sticky', top: 0, zIndex: 50,
         background: WHITE, borderBottom: `1px solid ${BORDER}`,
-        padding: '0 24px', height: 64,
+        padding: '0 24px', height: 280,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         boxShadow: '0 1px 8px rgba(0,0,0,0.05)',
       }}>
@@ -113,8 +113,8 @@ export default function Results() {
           ← Home
         </button>
         <Link to="/" style={{ textDecoration: 'none' }}>
-          <span style={{ height: 32, width: 'auto' }}>
-            <img src="/logo.png" alt="Clarity Costs" style={{ height: 32, width: 'auto', display: 'block' }} />
+          <span style={{ height: 260, width: 'auto' }}>
+            <img src="/logo.png" alt="Clarity Costs" style={{ height: 260, width: 'auto', display: 'block' }} />
           </span>
         </Link>
         <div style={{ width: 60 }} />

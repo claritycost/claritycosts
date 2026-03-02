@@ -39,7 +39,7 @@ export default function PolicyLayout({ title, badge, updated, children }) {
             ← Back
           </button>
           <Link to="/" style={{ textDecoration:'none' }}>
-            <img src="/logo.png" alt="Clarity Costs" style={{ height:32, width:'auto', display:'block' }} />
+            <img src="/logo.png" alt="Clarity Costs" style={{ height:52, width:'auto', display:'block' }} />
           </Link>
           <Link to="/" style={{ display:'flex', alignItems:'center', gap:6, fontFamily:'Inter', fontSize:13, fontWeight:600, color:NAVY, textDecoration:'none', border:`1px solid ${BORDER}`, borderRadius:8, padding:'8px 14px' }}>
             Back to home

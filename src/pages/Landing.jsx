@@ -187,14 +187,14 @@ export default function Landing() {
       }}>
         <div style={{
           maxWidth: 1100, margin: '0 auto', padding: '0 32px',
-          height: 60,
+          height: 280,
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         }}>
           <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
             <img
               src="/logo.png"
               alt="Clarity Costs"
-              style={{ height: 52, width: 'auto', display: 'block' }}
+              style={{ height: 260, width: 'auto', display: 'block' }}
             />
           </Link>
 

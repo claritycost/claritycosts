@@ -130,7 +130,7 @@ export default function Start() {
       <header style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
         background: WHITE, borderBottom: `1px solid ${BORDER}`,
-        height: 64, display: 'flex', alignItems: 'center',
+        height: 280, display: 'flex', alignItems: 'center',
         justifyContent: 'space-between', padding: '0 24px',
         boxShadow: '0 1px 8px rgba(0,0,0,0.05)',
       }}>
@@ -145,8 +145,8 @@ export default function Start() {
         </button>
 
         <Link to="/" style={{ textDecoration: 'none' }}>
-          <span style={{ height: 32, width: 'auto' }}>
-            <img src="/logo.png" alt="Clarity Costs" style={{ height: 32, width: 'auto', display: 'block' }} />
+          <span style={{ height: 260, width: 'auto' }}>
+            <img src="/logo.png" alt="Clarity Costs" style={{ height: 260, width: 'auto', display: 'block' }} />
           </span>
         </Link>
 

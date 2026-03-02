@@ -76,12 +76,12 @@ export default function Calculating() {
       {/* Header */}
       <header style={{
         background: WHITE, borderBottom: `1px solid ${BORDER}`,
-        height: 64, display: 'flex', alignItems: 'center',
+        height: 280, display: 'flex', alignItems: 'center',
         justifyContent: 'center', padding: '0 24px',
       }}>
         <Link to="/" style={{ textDecoration: 'none' }}>
-          <span style={{ height: 32, width: 'auto' }}>
-            <img src="/logo.png" alt="Clarity Costs" style={{ height: 32, width: 'auto', display: 'block' }} />
+          <span style={{ height: 260, width: 'auto' }}>
+            <img src="/logo.png" alt="Clarity Costs" style={{ height: 260, width: 'auto', display: 'block' }} />
           </span>
         </Link>
       </header>
