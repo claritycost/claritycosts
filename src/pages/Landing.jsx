@@ -194,7 +194,7 @@ export default function Landing() {
             <img
               src="/logo.png"
               alt="Clarity Costs"
-              style={{ height: 36, width: 'auto', display: 'block' }}
+              style={{ height: 52, width: 'auto', display: 'block' }}
             />
           </Link>
 
