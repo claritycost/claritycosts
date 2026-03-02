@@ -1,72 +1,77 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
-const GR = 'linear-gradient(135deg, #00e87a 0%, #00c46a 100%)'
-const GN = '#00e87a'
-const GDark = 'rgba(0,232,122,0.1)'
-const GBorder = 'rgba(0,232,122,0.18)'
-const FAINT = 'rgba(255,255,255,0.07)'
-const MUTED = 'rgba(255,255,255,0.48)'
+const NAVY    = '#1E3A5F'
+const NAVY2   = '#162d4a'
+const NAVYDARK= '#121E30'
+const GOLD    = '#E8A020'
+const BG      = '#F5F7FA'
+const WHITE   = '#ffffff'
+const TEXT    = '#1A1A2E'
+const MUTED   = '#64748b'
+const BORDER  = '#D1D9E0'
 
 export const sharedCSS = `
-  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=Inter:wght@400;500;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@700;800&display=swap');
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  h2 { font-family:'Outfit'; font-size:18px; font-weight:800; color:#fff; letter-spacing:-0.03em; margin:32px 0 10px; }
-  h3 { font-family:'Outfit'; font-size:15px; font-weight:700; color:rgba(255,255,255,0.82); letter-spacing:-0.02em; margin:22px 0 8px; }
-  p  { font-family:'Inter'; font-size:14px; color:rgba(255,255,255,0.52); line-height:1.75; margin-bottom:12px; }
-  ul, ol { padding-left:18px; margin-bottom:12px; }
-  li { font-family:'Inter'; font-size:14px; color:rgba(255,255,255,0.52); line-height:1.75; margin-bottom:5px; }
-  a  { color:${GN}; text-decoration:underline; text-underline-offset:3px; text-decoration-color:rgba(0,232,122,0.35); }
-  a:hover { color:#fff; }
-  strong { color:rgba(255,255,255,0.78); font-weight:600; }
-  table { width:100%; border-collapse:collapse; margin:18px 0 22px; font-size:13px; }
-  th { text-align:left; padding:10px 13px; background:rgba(0,232,122,0.08); border:1px solid rgba(0,232,122,0.15); color:rgba(255,255,255,0.7); font-family:'Outfit'; font-weight:700; letter-spacing:-0.01em; }
-  td { padding:10px 13px; border:1px solid rgba(255,255,255,0.06); color:rgba(255,255,255,0.48); vertical-align:top; line-height:1.6; }
-  tr:nth-child(even) td { background:rgba(255,255,255,0.02); }
-  .back:hover { color:#fff !important; }
-  .fl:hover { color:${GN} !important; }
+  h2 { font-family:'Poppins',Inter,sans-serif; font-size:20px; font-weight:800; color:${NAVY}; letter-spacing:-0.02em; margin:36px 0 12px; }
+  h3 { font-family:'Inter'; font-size:16px; font-weight:700; color:${NAVY}; margin:24px 0 8px; }
+  p  { font-family:'Inter'; font-size:15px; color:${MUTED}; line-height:1.75; margin-bottom:14px; }
+  ul, ol { padding-left:20px; margin-bottom:14px; }
+  li { font-family:'Inter'; font-size:15px; color:${MUTED}; line-height:1.75; margin-bottom:6px; }
+  a  { color:${NAVY}; font-weight:600; text-decoration:underline; text-underline-offset:3px; }
+  a:hover { color:${GOLD}; }
+  strong { color:${TEXT}; font-weight:600; }
+  table { width:100%; border-collapse:collapse; margin-bottom:20px; }
+  th { background:${BG}; border:1px solid ${BORDER}; padding:10px 14px; font-family:'Inter'; font-size:13px; font-weight:700; color:${NAVY}; text-align:left; }
+  td { border:1px solid ${BORDER}; padding:10px 14px; font-family:'Inter'; font-size:14px; color:${MUTED}; }
 `
 
-const NAV_LINKS = [['Privacy Policy','/privacy'],['Cookie Policy','/cookie-policy'],['Terms & Conditions','/terms'],['About','/about']]
-
-export default function PolicyLayout({ title, lastUpdated, children }) {
+export default function PolicyLayout({ title, badge, updated, children }) {
   const nav = useNavigate()
   return (
-    <div style={{ background:'#05061a', minHeight:'100vh', fontFamily:"'Inter', sans-serif", color:'#fff' }}>
+    <div style={{ background:BG, minHeight:'100vh' }}>
       <style>{sharedCSS}</style>
 
-      {/* Nav */}
-      <header style={{ position:'sticky', top:0, zIndex:50, background:'rgba(5,6,26,0.92)', backdropFilter:'blur(20px)', borderBottom:`1px solid ${FAINT}`, padding:'0 28px', height:'54px', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
-        <button className="back" onClick={() => nav(-1)} style={{ background:'none', border:'none', color:MUTED, fontFamily:'Inter', fontSize:'14px', fontWeight:'500', cursor:'pointer', display:'flex', alignItems:'center', gap:'5px', transition:'color 0.15s' }}>← Back</button>
-        <div style={{ display:'flex', alignItems:'center', gap:'8px', cursor:'pointer' }} onClick={() => nav('/')}>
-          <div style={{ width:'26px', height:'26px', borderRadius:'7px', background:GR, display:'flex', alignItems:'center', justifyContent:'center', boxShadow:`0 0 12px rgba(0,232,122,0.4)` }}>
-            <span style={{ fontFamily:'Outfit', fontSize:'10px', fontWeight:'800', color:'#001a0e' }}>CC</span>
-          </div>
-          <span style={{ fontFamily:'Outfit', fontSize:'14px', fontWeight:'700', color:'rgba(255,255,255,0.65)', letterSpacing:'-0.02em' }}>Clarity Costs</span>
+      {/* Sticky nav */}
+      <header style={{ position:'sticky', top:0, zIndex:100, background:'rgba(255,255,255,0.97)', borderBottom:`1px solid ${BORDER}`, boxShadow:'0 1px 8px rgba(0,0,0,0.05)' }}>
+        <div style={{ maxWidth:1200, margin:'0 auto', padding:'0 24px', height:64, display:'flex', alignItems:'center', justifyContent:'space-between', gap:16 }}>
+          <button onClick={() => nav(-1)} style={{ display:'flex', alignItems:'center', gap:8, background:'none', border:`1px solid ${BORDER}`, borderRadius:8, padding:'8px 14px', fontFamily:'Inter', fontSize:13, fontWeight:600, color:NAVY, cursor:'pointer' }}>
+            ← Back
+          </button>
+          <Link to="/" style={{ textDecoration:'none' }}>
+            <img src="/logo.png" alt="Clarity Costs" style={{ height:32, width:'auto', display:'block' }} />
+          </Link>
+          <Link to="/" style={{ display:'flex', alignItems:'center', gap:6, fontFamily:'Inter', fontSize:13, fontWeight:600, color:NAVY, textDecoration:'none', border:`1px solid ${BORDER}`, borderRadius:8, padding:'8px 14px' }}>
+            Back to home
+          </Link>
         </div>
-        <button onClick={() => nav('/')} className="fl" style={{ background:'none', border:`1px solid ${FAINT}`, borderRadius:'7px', padding:'7px 14px', fontFamily:'Inter', fontSize:'13px', fontWeight:'500', color:MUTED, cursor:'pointer', transition:'all 0.15s' }}>Back home</button>
       </header>
 
+      {/* Hero */}
+      <section style={{ background:`linear-gradient(135deg,${NAVY} 0%,${NAVY2} 100%)`, padding:'64px 24px', textAlign:'center' }}>
+        <div style={{ display:'inline-block', background:'rgba(232,160,32,0.15)', border:'1px solid rgba(232,160,32,0.3)', borderRadius:20, padding:'5px 14px', fontFamily:'Inter', fontSize:12, fontWeight:600, color:GOLD, letterSpacing:'0.05em', textTransform:'uppercase', marginBottom:16 }}>{badge || 'Legal'}</div>
+        <h1 style={{ fontFamily:'Poppins,Inter,sans-serif', fontWeight:800, fontSize:'clamp(26px,4vw,42px)', color:WHITE, letterSpacing:'-0.02em', marginBottom:12 }}>{title}</h1>
+        {updated && <p style={{ fontFamily:'Inter', fontSize:14, color:'rgba(255,255,255,0.5)', margin:0 }}>Last updated: {updated}</p>}
+      </section>
+
       {/* Content */}
-      <div style={{ maxWidth:'700px', margin:'0 auto', padding:'52px 24px 96px' }}>
-        <div style={{ marginBottom:'44px', paddingBottom:'28px', borderBottom:`1px solid ${FAINT}` }}>
-          <div style={{ display:'inline-flex', alignItems:'center', gap:'7px', background:GDark, border:`1px solid ${GBorder}`, borderRadius:'100px', padding:'4px 13px', marginBottom:'18px' }}>
-            <span style={{ fontFamily:'Inter', fontSize:'11px', fontWeight:'600', color:GN, letterSpacing:'0.09em', textTransform:'uppercase' }}>Legal</span>
-          </div>
-          <h1 style={{ fontFamily:'Outfit', fontWeight:'800', fontSize:'clamp(26px, 4vw, 38px)', letterSpacing:'-0.04em', lineHeight:'1.1', color:'#fff', marginBottom:'10px' }}>{title}</h1>
-          <p style={{ fontSize:'13px', color:'rgba(255,255,255,0.28)', marginBottom:0 }}>Last updated: {lastUpdated}</p>
+      <div style={{ maxWidth:760, margin:'0 auto', padding:'64px 24px 96px' }}>
+        <div style={{ background:WHITE, borderRadius:16, border:`1px solid ${BORDER}`, boxShadow:'0 4px 24px rgba(0,0,0,0.05)', padding:'48px 48px' }}>
+          {children}
         </div>
-        {children}
       </div>
 
-      {/* Footer */}
-      <footer style={{ borderTop:`1px solid ${FAINT}`, background:'rgba(3,4,18,0.95)', padding:'22px 28px', display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:'12px' }}>
-        <span style={{ fontFamily:'Inter', fontSize:'12px', color:'rgba(255,255,255,0.25)' }}>© 2026 Hello Clarity Ltd</span>
-        <div style={{ display:'flex', gap:'18px', flexWrap:'wrap' }}>
-          {NAV_LINKS.map(([l,p]) => (
-            <a key={p} href={p} className="fl" style={{ fontFamily:'Inter', fontSize:'12px', color:'rgba(255,255,255,0.35)', textDecoration:'none', transition:'color 0.15s' }}>{l}</a>
+      {/* Footer strip */}
+      <div style={{ background:NAVYDARK, padding:'32px 24px', textAlign:'center' }}>
+        <div style={{ display:'flex', flexWrap:'wrap', justifyContent:'center', gap:'8px 24px', marginBottom:12 }}>
+          {[{l:'Privacy Policy',t:'/privacy'},{l:'Terms & Conditions',t:'/terms'},{l:'Cookie Policy',t:'/cookie-policy'},{l:'Contact',t:'/contact'}].map(({l,t}) => (
+            <Link key={l} to={t} style={{ fontFamily:'Inter', fontSize:13, color:'rgba(255,255,255,0.45)', textDecoration:'none' }}>{l}</Link>
           ))}
         </div>
-      </footer>
+        <p style={{ fontFamily:'Inter', fontSize:12, color:'rgba(255,255,255,0.25)', margin:0 }}>
+          © 2026 Clarity Costs · Hello Clarity Ltd · 5 St Helens Road, Erith, Kent, DA18 4DX
+        </p>
+      </div>
     </div>
   )
 }
