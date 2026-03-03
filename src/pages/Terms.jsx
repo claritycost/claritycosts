@@ -1,56 +1,42 @@
-import PolicyLayout from './PolicyLayout.jsx'
+import PolicyLayout from './PolicyLayout'
 
 export default function Terms() {
   return (
-    <PolicyLayout title="Terms & Conditions" lastUpdated="1 March 2026">
-      <p>Please read these Terms carefully before using Clarity Costs. By using <strong>claritycosts.co.uk</strong> you agree to be bound by them.</p>
+    <PolicyLayout tag="Legal" title="Terms &" highlight="Conditions" subtitle="The rules that govern your use of Clarity Costs.">
+      <p className="last-updated">Last updated: 1 January 2025</p>
 
-      <h2>1. About us</h2>
-      <p>Clarity Costs is operated by Hello Clarity Ltd (5 St Helens Road, Erith, Kent, DA18 4DX), registered in England and Wales. Company details are on our <a href="/about">About page</a>. Contact: <a href="mailto:hello@claritycosts.co.uk">hello@claritycosts.co.uk</a></p>
+      <h2>1. Introduction</h2>
+      <p>These Terms &amp; Conditions ("Terms") govern your use of claritycosts.co.uk, operated by Hello Clarity Ltd ("Company", "we", "us"). By accessing or using the Service, you agree to be bound by these Terms.</p>
 
-      <h2>2. The service</h2>
-      <p>Clarity Costs provides a rate calculator for UK freelancers. The tool generates personalised rate recommendations based on information you provide.</p>
-      <p><strong>The rates, scripts, and advice we produce are guidance only.</strong> They do not constitute financial, legal, or professional advice. You are solely responsible for the rates you charge and any business decisions you make based on this tool's output.</p>
-      <p>We do not guarantee that rates suggested will be accepted by clients, that output is accurate for your specific circumstances, or that the tool will be available at all times without interruption.</p>
+      <h2>2. About the Service</h2>
+      <p>Clarity Costs provides an AI-powered freelance rate calculator for UK-based freelancers. Output is intended as guidance only and does not constitute professional financial, legal, or tax advice.</p>
 
-      <h2>3. Free service</h2>
-      <p>The basic calculator is free. By using it you agree to:</p>
-      <ul>
-        <li>Provide accurate information in the questionnaire.</li>
-        <li>Use the output for your own personal or business use only — not to resell or redistribute it.</li>
-        <li>Not attempt to reverse-engineer, scrape, or abuse the tool or its APIs.</li>
-      </ul>
+      <h2>3. Eligibility</h2>
+      <p>You must be at least 18 years of age to use the Service.</p>
 
-      <h2>4. Paid products</h2>
-      <p>The Full Report (currently £9.00 inc. VAT) is a one-time purchase including a PDF rate card, raise-your-rates guide, email templates, and other materials.</p>
+      <h2>4. Free and paid services</h2>
+      <p>The core rate calculation is free. Optional paid products (such as the Full PDF Report) are available for a one-time fee as described on the Pricing page. Prices are stated in GBP.</p>
 
-      <h3>4.1 Payment</h3>
-      <p>Payments are processed securely by Stripe. We do not store card details. By completing a purchase you agree to Stripe's terms of service.</p>
+      <h2>5. Refund policy</h2>
+      <p>As our paid products are digital goods delivered instantly upon purchase, we are unable to offer refunds once delivered, except where required by applicable consumer protection law. If you have not received your purchase, contact us within 48 hours.</p>
 
-      <h3>4.2 Delivery</h3>
-      <p>Digital products are delivered by email within minutes of payment confirmation, to the address you provide at checkout.</p>
+      <h2>6. Accuracy of results</h2>
+      <p>Rate recommendations are based on UK market data and AI modelling. We make no warranty that results will be accurate or appropriate for your specific circumstances. Clarity Costs is not responsible for any commercial decisions made based on the output.</p>
 
-      <h3>4.3 Refunds</h3>
-      <p>Because our products are digital and delivered immediately, we generally do not offer refunds once delivery has occurred. If you are dissatisfied, email <a href="mailto:hello@claritycosts.co.uk">hello@claritycosts.co.uk</a> within 14 days and we will review your case fairly.</p>
-      <p>Under the Consumer Contracts Regulations 2013 you have a 14-day right of withdrawal. However, by proceeding with an immediate digital download, you acknowledge that you waive this right once the content has been made available to you.</p>
+      <h2>7. Intellectual property</h2>
+      <p>All content on this website is the property of Hello Clarity Ltd or its licensors. Your personalised results are for your personal use only — you may not resell or commercialise them.</p>
 
-      <h2>5. Intellectual property</h2>
-      <p>All content on claritycosts.co.uk — including text, design, code, and generated rate card output — is owned by or licensed to Hello Clarity Ltd. You may use your personalised rate card and report for your own business purposes. You may not resell, distribute, or commercially exploit it.</p>
+      <h2>8. Acceptable use</h2>
+      <p>You agree not to submit false information, reverse-engineer the model, use automated bulk requests, or engage in any activity that disrupts the Service or violates applicable law.</p>
 
-      <h2>6. Limitation of liability</h2>
-      <p>To the fullest extent permitted by law, Hello Clarity Ltd shall not be liable for any indirect, incidental, or consequential damages arising from your use of the service, including loss of income or loss of data. Our total liability shall not exceed the amount you paid us in the preceding 12 months (minimum £9.00).</p>
+      <h2>9. Limitation of liability</h2>
+      <p>Our total liability to you shall not exceed the amount paid by you for the specific paid product giving rise to the claim, or £50, whichever is greater.</p>
 
-      <h2>7. User conduct</h2>
-      <p>You agree not to use the service for any unlawful purpose, submit false information, attempt unauthorised access to any part of the site, or use automated tools to scrape or bulk-query the service.</p>
+      <h2>10. Governing law</h2>
+      <p>These Terms are governed by the laws of England and Wales. Any disputes shall be subject to the exclusive jurisdiction of the courts of England and Wales.</p>
 
-      <h2>8. Changes</h2>
-      <p>We reserve the right to modify, suspend, or discontinue the service at any time. We may also update these Terms. Continued use after changes constitutes acceptance.</p>
-
-      <h2>9. Governing law</h2>
-      <p>These Terms are governed by the laws of England and Wales. Disputes are subject to the exclusive jurisdiction of the courts of England and Wales.</p>
-
-      <h2>10. Contact</h2>
-      <p><a href="mailto:hello@claritycosts.co.uk">hello@claritycosts.co.uk</a></p>
+      <h2>11. Contact</h2>
+      <p>Questions? Email <a href="mailto:hello@claritycosts.co.uk">hello@claritycosts.co.uk</a>.</p>
     </PolicyLayout>
   )
 }

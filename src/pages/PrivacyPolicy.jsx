@@ -1,72 +1,45 @@
-import PolicyLayout from './PolicyLayout.jsx'
+import PolicyLayout from './PolicyLayout'
 
 export default function PrivacyPolicy() {
   return (
-    <PolicyLayout title="Privacy Policy" lastUpdated="1 March 2026">
-      <h2>Who we are</h2>
-      <p>Clarity Costs is operated by Hello Clarity Ltd, registered in England and Wales. Our registered address is 5 St Helens Road, Erith, Kent, DA18 4DX. We run the rate calculator at <strong>claritycosts.co.uk</strong>. Questions? <a href="mailto:hello@claritycosts.co.uk">hello@claritycosts.co.uk</a></p>
+    <PolicyLayout tag="Legal" title="Privacy" highlight="Policy" subtitle="How we collect, use, and protect your personal data.">
+      <p className="last-updated">Last updated: 1 January 2025</p>
 
-      <h2>What information we collect</h2>
-      <h3>Information you give us</h3>
+      <h2>1. Who we are</h2>
+      <p>Clarity Costs is a product of Hello Clarity Ltd, registered in England and Wales. Contact us at <a href="mailto:hello@claritycosts.co.uk">hello@claritycosts.co.uk</a>.</p>
+
+      <h2>2. What data we collect</h2>
+      <p>When you use Clarity Costs we may collect:</p>
       <ul>
-        <li><strong>Email address</strong> — collected when you submit the questionnaire or purchase the full report.</li>
-        <li><strong>Questionnaire answers</strong> — discipline, experience, location, income target, and similar. Used to generate your rate card. We do not collect your name.</li>
-        <li><strong>Payment information</strong> — processed by Stripe. We never see or store your card details.</li>
-      </ul>
-      <h3>Information collected automatically</h3>
-      <ul>
-        <li><strong>Usage data</strong> — pages visited, time spent, device type, browser. Collected via analytics cookies only if you accept them.</li>
-        <li><strong>IP address</strong> — collected by our hosting provider (Vercel) for security and performance.</li>
+        <li><strong>Email address</strong> — provided by you when you request your results</li>
+        <li><strong>Questionnaire answers</strong> — specialty, experience, location, income target, and work preferences</li>
+        <li><strong>Usage data</strong> — pages visited, time on site, browser type (with consent via analytics cookies)</li>
+        <li><strong>Payment data</strong> — processed by our payment provider; we do not store card details</li>
       </ul>
 
-      <h2>How we use your information</h2>
-      <ul>
-        <li>To generate and deliver your personalised rate card by email.</li>
-        <li>To process payments for the full report via Stripe.</li>
-        <li>To send the full PDF report and guides you have purchased.</li>
-        <li>To improve the calculator based on aggregated, anonymised usage data.</li>
-        <li>To send occasional product updates — only if you have explicitly opted in.</li>
-      </ul>
+      <h2>3. How we use your data</h2>
+      <p>We use your data to deliver personalised results to your inbox, improve rate calculation accuracy using anonymised data, process payments, and respond to enquiries. We do not sell your data to any third party.</p>
 
-      <h2>Legal basis for processing (UK GDPR)</h2>
-      <ul>
-        <li><strong>Contract performance</strong> — processing your answers to deliver your rate card.</li>
-        <li><strong>Legitimate interests</strong> — analytics to improve the product; fraud prevention.</li>
-        <li><strong>Consent</strong> — optional analytics cookies and any marketing emails.</li>
-      </ul>
+      <h2>4. Legal basis for processing</h2>
+      <p>Contract performance (delivering results), legitimate interests (improving the product), consent (analytics cookies), and legal obligation (financial records).</p>
 
-      <h2>Who we share your data with</h2>
-      <p>We only share data with processors who help us deliver the service:</p>
-      <ul>
-        <li><strong>Supabase</strong> — database storage (servers in the EU).</li>
-        <li><strong>OpenAI</strong> — anonymised answers sent via API to generate rate recommendations. OpenAI does not use API data for training by default.</li>
-        <li><strong>Stripe</strong> — payment processing. Subject to Stripe's own privacy policy.</li>
-        <li><strong>Resend</strong> — email delivery.</li>
-        <li><strong>Vercel</strong> — website hosting.</li>
-      </ul>
-      <p>We do not sell, rent, or trade your personal data with any third parties for marketing purposes.</p>
+      <h2>5. Data retention</h2>
+      <p>We retain your email and results for up to 24 months. You can request deletion at any time by emailing us.</p>
 
-      <h2>How long we keep your data</h2>
-      <ul>
-        <li>Questionnaire responses and rate cards: up to 2 years.</li>
-        <li>Email addresses: until you unsubscribe or request deletion.</li>
-        <li>Payment records: 7 years (UK tax law requirement).</li>
-      </ul>
+      <h2>6. Who we share data with</h2>
+      <p>We use trusted third-party services for email delivery, payment processing, analytics (with your consent), and AI processing. All third parties are bound by data processing agreements and comply with UK GDPR.</p>
 
-      <h2>Your rights under UK GDPR</h2>
-      <p>You have the right to access, rectify, erase, restrict, or port your data, and to object to processing. To exercise any right, email <a href="mailto:hello@claritycosts.co.uk">hello@claritycosts.co.uk</a>. We will respond within 30 days. You may also complain to the ICO at <a href="https://ico.org.uk" target="_blank" rel="noopener noreferrer">ico.org.uk</a>.</p>
+      <h2>7. Your rights</h2>
+      <p>Under UK GDPR you have the right to access, correct, delete, restrict, or port your data, and to withdraw consent for analytics. Email us at <a href="mailto:hello@claritycosts.co.uk">hello@claritycosts.co.uk</a> to exercise any right. You can also complain to the ICO at <a href="https://ico.org.uk" target="_blank" rel="noopener noreferrer">ico.org.uk</a>.</p>
 
-      <h2>Cookies</h2>
-      <p>We use essential cookies to keep the site working and, where you consent, optional analytics cookies. See our <a href="/cookie-policy">Cookie Policy</a> for full details.</p>
+      <h2>8. Cookies</h2>
+      <p>See our <a href="/cookie-policy">Cookie Policy</a> for full details.</p>
 
-      <h2>Security</h2>
-      <p>We use HTTPS encryption, access controls, and reputable third-party processors. If you suspect a security issue, contact <a href="mailto:hello@claritycosts.co.uk">hello@claritycosts.co.uk</a> immediately.</p>
+      <h2>9. Changes to this policy</h2>
+      <p>We may update this Privacy Policy from time to time. The "last updated" date above will reflect any changes.</p>
 
-      <h2>Changes to this policy</h2>
-      <p>We may update this policy from time to time. Changes will be posted here with a revised date. For significant changes we will notify users by email where possible.</p>
-
-      <h2>Contact</h2>
-      <p><a href="mailto:hello@claritycosts.co.uk">hello@claritycosts.co.uk</a></p>
+      <h2>10. Contact</h2>
+      <p>For any privacy-related questions, contact us at <a href="mailto:hello@claritycosts.co.uk">hello@claritycosts.co.uk</a>.</p>
     </PolicyLayout>
   )
 }

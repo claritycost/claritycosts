@@ -1,50 +1,81 @@
-import PolicyLayout from './PolicyLayout.jsx'
+import { useState } from 'react'
+import PolicyLayout from './PolicyLayout'
+
+const TH = ({ children }) => (
+  <th style={{ textAlign: 'left', padding: '11px 14px', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.09em', color: 'var(--muted2)', borderBottom: '1px solid var(--border)' }}>
+    {children}
+  </th>
+)
+const TD = ({ children, mono }) => (
+  <td style={{ padding: '12px 14px', color: mono ? 'var(--text)' : 'var(--muted)', fontFamily: mono ? 'monospace' : 'inherit', borderBottom: '1px solid var(--border)', verticalAlign: 'top' }}>
+    {children}
+  </td>
+)
 
 export default function CookiePolicy() {
+  const [status, setStatus] = useState(localStorage.getItem('cc_cookies') || 'unset')
+
+  const accept = () => { localStorage.setItem('cc_cookies', 'accepted'); setStatus('accepted') }
+  const decline = () => { localStorage.setItem('cc_cookies', 'declined'); setStatus('declined') }
+
+  const statusLabel = status === 'accepted' ? 'Accepted all' : status === 'declined' ? 'Essential only' : 'Not set'
+  const statusColor = status === 'accepted' ? 'var(--green)' : status === 'declined' ? 'var(--muted)' : 'var(--white)'
+
   return (
-    <PolicyLayout title="Cookie Policy" lastUpdated="1 March 2026">
-      <p>This Cookie Policy explains how Clarity Costs (Hello Clarity Ltd) uses cookies on <strong>claritycosts.co.uk</strong>. Essential cookies are always active. Optional analytics cookies are only set with your consent via the banner when you first visit.</p>
+    <PolicyLayout tag="Legal" title="Cookie" highlight="Policy" subtitle="What cookies we use, why, and how to control them.">
+      <p className="last-updated">Last updated: 1 January 2025</p>
 
       <h2>What are cookies?</h2>
-      <p>Cookies are small text files stored on your device when you visit a website. They help the site work properly, remember preferences, and — where you consent — help us understand usage patterns.</p>
+      <p>Cookies are small text files stored on your device when you visit a website. They help websites remember information about your visit, such as your preferences or consent choices.</p>
 
-      <h2>Cookies we use</h2>
+      <h2>Your current preference</h2>
+      <div style={{ background: 'var(--card)', border: '1px solid rgba(0,232,122,.2)', borderRadius: 14, padding: 28, marginBottom: 28 }}>
+        <p style={{ marginBottom: 14, fontSize: 14, color: 'var(--muted)' }}>
+          Current setting: <strong style={{ color: statusColor }}>{statusLabel}</strong>
+        </p>
+        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+          <button onClick={accept} style={{ background: 'var(--green)', color: '#000', fontSize: 13, fontWeight: 700, padding: '9px 18px', borderRadius: 8, border: 'none', cursor: 'pointer', fontFamily: 'Inter, sans-serif' }}>
+            Accept analytics cookies
+          </button>
+          <button onClick={decline} style={{ background: 'transparent', color: 'var(--muted)', fontSize: 13, fontWeight: 600, padding: '9px 14px', borderRadius: 8, border: '1px solid var(--border2)', cursor: 'pointer', fontFamily: 'Inter, sans-serif' }}>
+            Essential only
+          </button>
+        </div>
+      </div>
 
-      <h3>Essential cookies (always active)</h3>
-      <table>
-        <thead><tr><th>Cookie</th><th>Purpose</th><th>Duration</th></tr></thead>
+      <h2>Essential cookies</h2>
+      <p>These cookies are strictly necessary for the website to function and cannot be disabled.</p>
+      <table style={{ width: '100%', borderCollapse: 'collapse', margin: '16px 0 28px', fontSize: 13.5 }}>
+        <thead><tr><TH>Name</TH><TH>Purpose</TH><TH>Duration</TH></tr></thead>
         <tbody>
-          <tr><td>cc_cookie_consent</td><td>Remembers your cookie consent choice so we don't ask on every visit</td><td>12 months</td></tr>
-          <tr><td>Session storage<br/>(cc_answers, rateCardData, userEmail)</td><td>Temporarily stores your questionnaire answers and rate card during your session. Cleared when you close your browser tab.</td><td>Session only</td></tr>
+          <tr><TD mono>cc_cookies</TD><TD>Stores your cookie consent preference so we don't show the banner on every visit.</TD><TD>12 months</TD></tr>
+          <tr style={{ borderBottom: 'none' }}><TD mono>cc_session</TD><TD>Maintains your session state as you move through the calculator steps.</TD><TD>Session</TD></tr>
         </tbody>
       </table>
 
-      <h3>Analytics cookies (optional — only with your consent)</h3>
-      <table>
-        <thead><tr><th>Cookie</th><th>Provider</th><th>Purpose</th><th>Duration</th></tr></thead>
+      <h2>Analytics cookies (with consent)</h2>
+      <p>These cookies are optional and only set with your consent. They help us understand how visitors use our site so we can improve it.</p>
+      <table style={{ width: '100%', borderCollapse: 'collapse', margin: '16px 0 28px', fontSize: 13.5 }}>
+        <thead><tr><TH>Name</TH><TH>Purpose</TH><TH>Duration</TH></tr></thead>
         <tbody>
-          <tr><td>_ga, _ga_*</td><td>Google Analytics</td><td>Tracks page views and user behaviour in aggregate. Data is anonymised.</td><td>2 years</td></tr>
+          {[
+            ['_ga',   'Google Analytics — distinguishes unique users and tracks traffic volumes.', '2 years'],
+            ['_ga_*', 'Google Analytics 4 — stores session state information.',                   '2 years'],
+            ['_gid',  'Distinguishes unique users over a 24-hour period.',                        '24 hours'],
+          ].map(([name, purpose, duration]) => (
+            <tr key={name}><TD mono>{name}</TD><TD>{purpose}</TD><TD>{duration}</TD></tr>
+          ))}
         </tbody>
       </table>
 
-      <h3>Payment cookies (Stripe)</h3>
-      <p>When you proceed to Stripe Checkout, Stripe sets its own cookies for fraud prevention and session management. These are governed by <a href="https://stripe.com/gb/privacy" target="_blank" rel="noopener noreferrer">Stripe's Privacy Policy</a>.</p>
-
-      <h2>Managing your preferences</h2>
-      <p>You can change your cookie preferences at any time by clearing your browser cookies and reloading the page — the consent banner will reappear. You can also use your browser settings to block or delete cookies. Note: blocking essential cookies may break parts of the site.</p>
-      <p>Browser guides:</p>
-      <ul>
-        <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener noreferrer">Google Chrome</a></li>
-        <li><a href="https://support.mozilla.org/en-US/kb/clear-cookies-and-site-data-firefox" target="_blank" rel="noopener noreferrer">Mozilla Firefox</a></li>
-        <li><a href="https://support.apple.com/en-gb/guide/safari/sfri11471/mac" target="_blank" rel="noopener noreferrer">Apple Safari</a></li>
-        <li><a href="https://support.microsoft.com/en-us/microsoft-edge/delete-cookies-in-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09" target="_blank" rel="noopener noreferrer">Microsoft Edge</a></li>
-      </ul>
+      <h2>How to control cookies</h2>
+      <p>In addition to the controls above, you can manage cookies through your browser settings. Most browsers allow you to view, delete, or block cookies. Note that disabling all cookies may affect site functionality.</p>
 
       <h2>Changes to this policy</h2>
-      <p>We may update this policy from time to time. Changes will be posted here with a revised date.</p>
+      <p>We may update this Cookie Policy from time to time. The "last updated" date above will reflect any changes.</p>
 
       <h2>Contact</h2>
-      <p>Questions about cookies? <a href="mailto:hello@claritycosts.co.uk">hello@claritycosts.co.uk</a> — or see our <a href="/privacy">Privacy Policy</a>.</p>
+      <p>Questions? Email <a href="mailto:hello@claritycosts.co.uk">hello@claritycosts.co.uk</a>.</p>
     </PolicyLayout>
   )
 }
