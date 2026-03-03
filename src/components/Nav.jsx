@@ -4,7 +4,7 @@ export default function Nav() {
   return (
     <nav className="nav">
       <div className="nav-logo">
-        <Link to="/"><img src="/logo.png" alt="Clarity Costs" style={{ height: "90px", width: "auto" }} /></Link>
+        <Link to="/"><img src="/logo.png" alt="Clarity Costs" style={{ height: "180px", width: "auto" }} /></Link>
       </div>
       <ul className="nav-links">
         <li><NavLink to="/how-it-works" className={({ isActive }) => isActive ? 'active' : ''}>How it works</NavLink></li>
