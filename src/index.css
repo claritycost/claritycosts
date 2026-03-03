@@ -195,7 +195,7 @@ button { font-family: inherit; }
   padding-bottom: 28px; border-bottom: 1px solid var(--border);
   margin-bottom: 28px; gap: 40px;
 }
-.footer-brand img       { height: 30px; }
+.footer-brand img       { height: 80px; }
 .footer-tagline         { font-size: 13px; color: var(--muted2); margin-top: 8px; }
 .footer-cols            { display: flex; gap: 56px; }
 .footer-col h4          { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--muted2); margin-bottom: 14px; }
