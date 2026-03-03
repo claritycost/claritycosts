@@ -9,7 +9,7 @@ export default function Footer() {
             <img 
   src="/logo.png" 
   alt="Clarity Costs" 
-  style={{ height: "60px", width: "auto" }} 
+  style={{ height: "130px", width: "auto" }} 
 />
 
             <div className="footer-tagline">Built for UK freelancers who are done undercharging.</div>
