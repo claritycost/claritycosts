@@ -6,7 +6,12 @@ export default function Footer() {
       <div className="footer-inner">
         <div className="footer-top">
           <div className="footer-brand">
-            <img src="/logo.png" alt="Clarity Costs" />
+            <img 
+  src="/logo.png" 
+  alt="Clarity Costs" 
+  style={{ height: "60px", width: "auto" }} 
+/>
+
             <div className="footer-tagline">Built for UK freelancers who are done undercharging.</div>
           </div>
           <div className="footer-cols">
