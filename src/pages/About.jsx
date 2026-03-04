@@ -11,12 +11,12 @@ const MUTED = 'rgba(255,255,255,0.48)'
 
 const INFO_ROWS = [
   ['Trading name','Clarity Costs'],
-  ['Legal entity','Hello Clarity Ltd'],
+  ['Legal entity','Clarity Cost Ltd'],
   ['Company number','[To be confirmed]'],
   ['Registered address','5 St Helens Road, Erith, Kent, DA18 4DX'],
   ['Country of incorporation','England and Wales'],
   
-  ['Email','hello@claritycosts.co.uk'],
+  ['Email','contactus@claritycosts.co.uk'],
   ['Website','claritycosts.co.uk'],
 ]
 
