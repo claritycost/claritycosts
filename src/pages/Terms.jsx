@@ -23,7 +23,7 @@ export default function Terms() {
       <h2>9. Governing law</h2>
       <p>Governed by the laws of England and Wales.</p>
       <h2>10. Contact</h2>
-      <p><a href="mailto:hello@claritycosts.co.uk">hello@claritycosts.co.uk</a></p>
+      <p><a href="mailto:terms@claritycosts.co.uk">terms@claritycosts.co.uk</a></p>
     </PolicyLayout>
   )
 }
