@@ -9,7 +9,7 @@ const FAQS = [
   { q:'Is the free plan really free forever?', a:'Yes. Your full rate card — day rate, project rate, retainer, positioning statement, and charge script — is emailed to you at no cost. No credit card, no time limit.' },
   { q:'What exactly do I get with the £9 report?', a:"A one-off £9 purchase — not a subscription. You get a PDF with 10 raise-your-rates strategies tailored to your situation, 4 copy-paste email templates, and a personalised 6-month roadmap." },
   { q:'Can I pay and download immediately?', a:'Yes. After completing the free questionnaire you can upgrade instantly via Stripe. Your PDF is emailed within minutes of payment.' },
-  { q:'Do you offer refunds?', a:"If you're not satisfied, email hello@claritycosts.co.uk within 7 days of purchase for a full refund — no questions asked." },
+  { q:'Can I use this if I'm just starting out as a freelancer?', a:"Absolutely. Clarity Costs is built for all experience levels. If you're just starting out, knowing your rate from day one means you never have to undercharge just to win your first clients." },
 ]
 
 export default function Pricing() {
