@@ -70,7 +70,7 @@ export default function CookiePolicy() {
       <p>Use the buttons above, or manage cookies through your browser settings. Note that disabling all cookies may affect site functionality.</p>
 
       <h2>Contact</h2>
-      <p><a href="mailto:hello@claritycosts.co.uk">hello@claritycosts.co.uk</a></p>
+      <p><a href="mailto:contactus@claritycosts.co.uk">contactus@claritycosts.co.uk</a></p>
     </PolicyLayout>
   )
 }
