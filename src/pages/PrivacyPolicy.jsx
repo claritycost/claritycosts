@@ -5,7 +5,7 @@ export default function PrivacyPolicy() {
     <PolicyLayout tag="Legal" title="Privacy" highlight="Policy" subtitle="How we collect, use, and protect your personal data.">
       <p className="last-updated">Last updated: 1 January 2025</p>
       <h2>1. Who we are</h2>
-      <p>Clarity Costs is a product of Hello Clarity Ltd, registered in England and Wales. Contact us at <a href="mailto:hello@claritycosts.co.uk">hello@claritycosts.co.uk</a>.</p>
+      <p>Clarity Costs is a product of Hello Clarity Ltd, registered in England and Wales. Contact us at <a href="mailto:contactus@claritycosts.co.uk">contactus@claritycosts.co.uk</a>.</p>
       <h2>2. What data we collect</h2>
       <ul>
         <li><strong>Email address</strong> — provided when you request your results</li>
@@ -20,11 +20,11 @@ export default function PrivacyPolicy() {
       <h2>5. Data retention</h2>
       <p>Up to 24 months. Request deletion any time by emailing us.</p>
       <h2>6. Your rights</h2>
-      <p>Under UK GDPR you have the right to access, correct, delete, restrict, or port your data. Email <a href="mailto:hello@claritycosts.co.uk">hello@claritycosts.co.uk</a> or complain to the <a href="https://ico.org.uk" target="_blank" rel="noopener noreferrer">ICO</a>.</p>
+      <p>Under UK GDPR you have the right to access, correct, delete, restrict, or port your data. Email <a href="mailto:privacy@claritycosts.co.uk">privacy@claritycosts.co.uk</a> or complain to the <a href="https://ico.org.uk" target="_blank" rel="noopener noreferrer">ICO</a>.</p>
       <h2>7. Cookies</h2>
       <p>See our <a href="/cookie-policy">Cookie Policy</a> for full details.</p>
       <h2>8. Contact</h2>
-      <p><a href="mailto:hello@claritycosts.co.uk">hello@claritycosts.co.uk</a></p>
+      <p><a href="mailto:privacy@claritycosts.co.uk">privacy@claritycosts.co.uk</a></p>
     </PolicyLayout>
   )
 }
