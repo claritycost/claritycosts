@@ -24,7 +24,7 @@ export default function PrivacyPolicy() {
       <h2>7. Cookies</h2>
       <p>See our <a href="/cookie-policy">Cookie Policy</a> for full details.</p>
       <h2>8. Contact</h2>
-      <p><a href="mailto:privacy@claritycosts.co.uk">privacy@claritycosts.co.uk</a></p>
+      <p><a href="mailto:contactus@claritycosts.co.uk">contactus@claritycosts.co.uk</a></p>
     </PolicyLayout>
   )
 }
