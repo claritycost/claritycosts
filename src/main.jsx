@@ -1,37 +1,43 @@
-import { StrictMode } from 'react'
+import { StrictMode, useLayoutEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import './index.css'
-
-import Landing      from './pages/Landing.jsx'
-import Start        from './pages/Start.jsx'
-import Calculating  from './pages/Calculating.jsx'
-import Results      from './pages/Results.jsx'
-import Save         from './pages/Save.jsx'
-import Upgrade      from './pages/Upgrade.jsx'
-import Success      from './pages/Success.jsx'
-import Admin        from './pages/Admin.jsx'
-import Share        from './pages/Share.jsx'
+import Landing       from './pages/Landing.jsx'
+import Start         from './pages/Start.jsx'
+import Calculating   from './pages/Calculating.jsx'
+import Results       from './pages/Results.jsx'
+import Save          from './pages/Save.jsx'
+import Upgrade       from './pages/Upgrade.jsx'
+import Success       from './pages/Success.jsx'
+import Admin         from './pages/Admin.jsx'
+import Share         from './pages/Share.jsx'
 import PrivacyPolicy from './pages/PrivacyPolicy.jsx'
-import CookiePolicy from './pages/CookiePolicy.jsx'
-import Terms        from './pages/Terms.jsx'
-import About        from './pages/About.jsx'
-import HowItWorks   from './pages/HowItWorks.jsx'
-import Pricing      from './pages/Pricing.jsx'
+import CookiePolicy  from './pages/CookiePolicy.jsx'
+import Terms         from './pages/Terms.jsx'
+import About         from './pages/About.jsx'
+import HowItWorks    from './pages/HowItWorks.jsx'
+import Pricing       from './pages/Pricing.jsx'
+import Nav           from './components/Nav.jsx'
+import Footer        from './components/Footer.jsx'
+import CookieBanner  from './components/CookieBanner.jsx'
 
-import Nav          from './components/Nav.jsx'
-import Footer       from './components/Footer.jsx'
-import CookieBanner from './components/CookieBanner.jsx'
-
-// Nav/Footer hidden on full-screen pages
 const BARE_PAGES = ['/calculating', '/admin']
+
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  useLayoutEffect(() => {
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
+  }, [pathname])
+  return null
+}
 
 function Layout() {
   const { pathname } = useLocation()
   const isBare = BARE_PAGES.some(p => pathname.startsWith(p))
-
   return (
     <>
+      <ScrollToTop />
       {!isBare && <Nav />}
       <Routes>
         <Route path="/"              element={<Landing />} />
