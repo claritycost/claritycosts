@@ -12,8 +12,8 @@ const STEPS = [
 ]
 
 export default function Calculating() {
-  const navigate  = useNavigate()
-  const ran       = useRef(false)
+  const navigate = useNavigate()
+  const ran      = useRef(false)
 
   useEffect(() => {
     if (ran.current) return
@@ -35,14 +35,13 @@ export default function Calculating() {
         navigate('/results')
       })
       .catch((err) => {
-  console.error('Calculate error:', err)
-  navigate('/start?error=1')
-})
+        console.error('Calculate error:', err)
+        navigate('/start?error=1')
+      })
+  }, [])   // ← this closing bracket was missing
 
   return (
     <div style={{ minHeight: '100dvh', background: 'var(--bg)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '40px 24px' }}>
-
-      {/* Animated ring */}
       <div style={{ position: 'relative', width: 80, height: 80, marginBottom: 48 }}>
         <div style={{ position: 'absolute', inset: 0, borderRadius: '50%', border: '2px solid rgba(0,232,122,.15)' }} />
         <div style={{ position: 'absolute', inset: 0, borderRadius: '50%', border: '2px solid transparent', borderTopColor: 'var(--green)', animation: 'spin 1s linear infinite' }} />
@@ -57,20 +56,19 @@ export default function Calculating() {
         Analysing UK market data for your discipline and region.
       </p>
 
-      {/* Step list */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%', maxWidth: 380 }}>
         {STEPS.map((s, i) => (
-          <div key={s} style={{ display: 'flex', alignItems: 'center', gap: 12, animation: `fadeUp 0.4s ease both`, animationDelay: `${i * 0.35}s`, opacity: 0 }}>
-            <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--green)', flexShrink: 0, animation: `pulse 1.5s ease infinite`, animationDelay: `${i * 0.35}s` }} />
+          <div key={s} style={{ display: 'flex', alignItems: 'center', gap: 12, animation: 'fadeUp 0.4s ease both', animationDelay: `${i * 0.35}s`, opacity: 0 }}>
+            <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--green)', flexShrink: 0, animation: 'pulse 1.5s ease infinite', animationDelay: `${i * 0.35}s` }} />
             <span style={{ fontSize: 13, color: 'var(--muted)', lineHeight: 1.4 }}>{s}</span>
           </div>
         ))}
       </div>
 
       <style>{`
-        @keyframes spin    { to { transform: rotate(360deg) } }
-        @keyframes fadeUp  { from { opacity:0; transform:translateY(8px) } to { opacity:1; transform:none } }
-        @keyframes pulse   { 0%,100% { opacity:.4; transform:scale(.8) } 50% { opacity:1; transform:scale(1.2) } }
+        @keyframes spin   { to { transform: rotate(360deg) } }
+        @keyframes fadeUp { from { opacity:0; transform:translateY(8px) } to { opacity:1; transform:none } }
+        @keyframes pulse  { 0%,100% { opacity:.4; transform:scale(.8) } 50% { opacity:1; transform:scale(1.2) } }
       `}</style>
     </div>
   )
