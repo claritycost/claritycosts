@@ -29,19 +29,26 @@ export default function Calculating() {
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify(answers),
     })
-      .then(r => r.json())
-      .then(data => {
-        sessionStorage.setItem('cc_results', JSON.stringify(data))
-        navigate('/results')
+      .then(r => r.text())
+      .then(text => {
+        try {
+          const data = JSON.parse(text)
+          sessionStorage.setItem('cc_results', JSON.stringify(data))
+          navigate('/results')
+        } catch {
+          document.body.innerHTML = `<div style="color:white;padding:40px;font-family:monospace;background:#080b12;min-height:100vh">
+            <h2 style="color:#00e87a;margin-bottom:16px">Raw API Response</h2>
+            <pre style="color:#f87171;white-space:pre-wrap;font-size:13px">${text}</pre>
+          </div>`
+        }
       })
-     .catch((err) => {
-  console.error('Calculate error:', err)
-  document.body.innerHTML = `<div style="color:white;padding:40px;font-family:monospace;background:#080b12;min-height:100vh">
-    <h2 style="color:#00e87a">API Error</h2>
-    <pre style="color:#f87171;white-space:pre-wrap">${err.message}</pre>
-  </div>`
-})
-  }, [])   // ← this closing bracket was missing
+      .catch(err => {
+        document.body.innerHTML = `<div style="color:white;padding:40px;font-family:monospace;background:#080b12;min-height:100vh">
+          <h2 style="color:#00e87a;margin-bottom:16px">Fetch Error</h2>
+          <pre style="color:#f87171;white-space:pre-wrap;font-size:13px">${err.message}</pre>
+        </div>`
+      })
+  }, [])
 
   return (
     <div style={{ minHeight: '100dvh', background: 'var(--bg)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '40px 24px' }}>
