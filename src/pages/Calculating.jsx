@@ -34,8 +34,10 @@ export default function Calculating() {
         sessionStorage.setItem('cc_results', JSON.stringify(data))
         navigate('/results')
       })
-      .catch(() => navigate('/start'))
-  }, [])
+      .catch((err) => {
+  console.error('Calculate error:', err)
+  navigate('/start?error=1')
+})
 
   return (
     <div style={{ minHeight: '100dvh', background: 'var(--bg)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '40px 24px' }}>
