@@ -3,11 +3,6 @@ import { createClient } from '@supabase/supabase-js'
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 
-const supabase = createClient(
-  process.env.VITE_SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-)
-
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' })
@@ -19,8 +14,14 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Missing required fields' })
   }
 
+  // Supabase created inside handler so missing env vars don't crash on startup
+  const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL
+  const supabaseKey = process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY
+  const supabase = supabaseUrl && supabaseKey
+    ? createClient(supabaseUrl, supabaseKey)
+    : null
+
   try {
-    // ── 1. GPT-4o rate generation ────────────────────────────────────────────
     const prompt = `You are a UK freelance rate expert with deep knowledge of current UK contractor market rates.
 
 A UK freelancer has provided the following details:
@@ -42,9 +43,9 @@ Respond ONLY with a valid JSON object — no markdown, no explanation, no code f
   "annual": "£127,400",
   "project": "£3,250",
   "retainer": "£5,200",
-  "positioning": "Write a confident 2-sentence positioning statement in first person, e.g. I help [client type] [achieve outcome] through [specialty]. I specialise in [niche] and typically work with [client description].",
-  "script": "Write a natural, confident response to 'what do you charge?' in first person. Include the day rate, a rough project estimate, and offer to send a proposal. Keep it conversational, not robotic.",
-  "rationale": "1–2 sentences explaining how this rate was calculated."
+  "positioning": "Write a confident 2-sentence positioning statement in first person.",
+  "script": "Write a natural, confident response to what do you charge in first person.",
+  "rationale": "1-2 sentences explaining how this rate was calculated."
 }
 
 Base your calculation on:
@@ -69,66 +70,55 @@ Use realistic, current UK rates. Do not inflate.`
     try {
       rateData = JSON.parse(raw)
     } catch {
-      // Strip any accidental markdown fences and retry
       const cleaned = raw.replace(/```json|```/g, '').trim()
       rateData = JSON.parse(cleaned)
     }
 
-    // ── 2. Save to Supabase ──────────────────────────────────────────────────
-    const { data: saved, error: dbError } = await supabase
-      .from('results')
-      .insert({
-        email,
-        answers: { specialty, experience, location, worktype, income, days, clients },
-        rate: {
-          dayRate:   rateData.dayRate,
-          rangeLow:  rateData.rangeLow,
-          rangeHigh: rateData.rangeHigh,
-          monthly:   rateData.monthly,
-          annual:    rateData.annual,
-          project:   rateData.project,
-          retainer:  rateData.retainer,
-        },
-        positioning: rateData.positioning,
-        script:      rateData.script,
-        paid: false,
-      })
-      .select('id')
-      .single()
+    // Save to Supabase if available
+    let savedId = null
+    if (supabase) {
+      const { data: saved, error: dbError } = await supabase
+        .from('results')
+        .insert({
+          email,
+          answers: { specialty, experience, location, worktype, income, days, clients },
+          rate: {
+            dayRate:   rateData.dayRate,
+            rangeLow:  rateData.rangeLow,
+            rangeHigh: rateData.rangeHigh,
+            monthly:   rateData.monthly,
+            annual:    rateData.annual,
+            project:   rateData.project,
+            retainer:  rateData.retainer,
+          },
+          positioning: rateData.positioning,
+          script:      rateData.script,
+          paid: false,
+        })
+        .select('id')
+        .single()
 
-    if (dbError) {
-      console.error('Supabase insert error:', dbError)
-      // Don't block the user — still return results
+      if (dbError) console.error('Supabase insert error:', dbError)
+      else savedId = saved?.id
     }
 
-    // ── 3. Send results email (fire and forget) ──────────────────────────────
+    // Fire and forget email
     const baseUrl = process.env.VITE_APP_URL || 'https://claritycosts.co.uk'
     fetch(`${baseUrl}/api/send-email`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email,
-        rateData: {
-          ...rateData,
-          positioning: rateData.positioning,
-          script: rateData.script,
-        },
-        resultId: saved?.id,
-      }),
+      body: JSON.stringify({ email, rateData, resultId: savedId }),
     }).catch(err => console.error('Email send error:', err))
 
-    // ── 4. Return to client ──────────────────────────────────────────────────
     return res.status(200).json({
-      id: saved?.id,
-      rate: {
-        dayRate:   rateData.dayRate,
-        rangeLow:  rateData.rangeLow,
-        rangeHigh: rateData.rangeHigh,
-        monthly:   rateData.monthly,
-        annual:    rateData.annual,
-        project:   rateData.project,
-        retainer:  rateData.retainer,
-      },
+      id:          savedId,
+      dayRate:     rateData.dayRate,
+      rangeLow:    rateData.rangeLow,
+      rangeHigh:   rateData.rangeHigh,
+      monthly:     rateData.monthly,
+      annual:      rateData.annual,
+      project:     rateData.project,
+      retainer:    rateData.retainer,
       positioning: rateData.positioning,
       script:      rateData.script,
       rationale:   rateData.rationale,
@@ -136,6 +126,6 @@ Use realistic, current UK rates. Do not inflate.`
 
   } catch (err) {
     console.error('Calculate error:', err)
-    return res.status(500).json({ error: 'Failed to generate rate. Please try again.' })
+    return res.status(500).json({ error: err.message })
   }
 }
