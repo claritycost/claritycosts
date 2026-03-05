@@ -34,10 +34,13 @@ export default function Calculating() {
         sessionStorage.setItem('cc_results', JSON.stringify(data))
         navigate('/results')
       })
-      .catch((err) => {
-        console.error('Calculate error:', err)
-        navigate('/start?error=1')
-      })
+     .catch((err) => {
+  console.error('Calculate error:', err)
+  document.body.innerHTML = `<div style="color:white;padding:40px;font-family:monospace;background:#080b12;min-height:100vh">
+    <h2 style="color:#00e87a">API Error</h2>
+    <pre style="color:#f87171;white-space:pre-wrap">${err.message}</pre>
+  </div>`
+})
   }, [])   // ← this closing bracket was missing
 
   return (
