@@ -16,7 +16,7 @@ export default function Results() {
 
   const { dayRate, rangeLow, rangeHigh, monthly, annual, project, retainer, positioning, script } = data
 
-  const fmt = (n) => n ? `£${Number(n).toLocaleString('en-GB')}` : '—'
+  const fmt = (n) => n ? (typeof n === 'string' ? n : `£${Number(n).toLocaleString('en-GB')}`) : '—'
 
   const copyScript = () => {
     navigator.clipboard.writeText(script || '')
