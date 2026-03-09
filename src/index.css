@@ -219,6 +219,7 @@ button { font-family: inherit; }
   gap: 24px;
   max-width: 860px;
   margin: 0 auto 80px;
+  width: 100%;
 }
 .pricing-card {
   border-radius: 20px;
@@ -389,7 +390,7 @@ button { font-family: inherit; }
   .cookie-actions { width: 100%; }
 }
 
-@media (max-width: 660px) {
+@media (max-width: 540px) {
   .pricing-cards { grid-template-columns: 1fr; }
 }
 
