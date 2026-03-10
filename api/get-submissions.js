@@ -1,11 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_KEY
-)
-
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'clarity-admin-2024'
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -14,14 +9,23 @@ export default async function handler(req, res) {
 
   const { password } = req.body
 
-  if (password !== ADMIN_PASSWORD) {
+  if (!password || password !== ADMIN_PASSWORD) {
     return res.status(401).json({ error: 'Incorrect password' })
   }
 
+  const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL
+  const supabaseKey = process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY
+
+  if (!supabaseUrl || !supabaseKey) {
+    return res.status(500).json({ error: 'Database not configured' })
+  }
+
+  const supabase = createClient(supabaseUrl, supabaseKey)
+
   try {
     const { data, error } = await supabase
-      .from('submissions')
-      .select('id, answers, rate_card, created_at, paid, paid_at')
+      .from('results')
+      .select('*')
       .order('created_at', { ascending: false })
 
     if (error) {
@@ -29,15 +33,17 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'Database error' })
     }
 
-    // Normalise for the admin dashboard
     const submissions = (data || []).map(row => ({
-      id: row.id,
-      email: row.answers?.email || '—',
-      answers: row.answers,
-      rates: row.rate_card,
+      id:         row.id,
+      email:      row.email || '—',
+      answers:    row.answers,
+      rates: {
+        dayRate:      row.rate?.dayRate  || '—',
+        projectRate:  row.rate?.project  || '—',
+        retainerRate: row.rate?.retainer || '—',
+      },
       created_at: row.created_at,
-      paid: row.paid || false,
-      paid_at: row.paid_at,
+      paid:       row.paid || false,
     }))
 
     return res.status(200).json({ submissions })
