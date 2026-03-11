@@ -8,11 +8,11 @@ const SAMPLE_REPORT = [
   },
   {
     section: '02 — Objection Scripts x5',
-    content: 'That\'s more than we usually pay. → I understand — my rate reflects specialist experience and the quality of output you\'ll get. I\'m happy to scope a smaller initial project so you can see the value firsthand. Would that work?',
+    content: 'That is more than we usually pay. → I understand — my rate reflects specialist experience and the quality of output you will get. I am happy to scope a smaller initial project so you can see the value firsthand. Would that work?',
   },
   {
     section: '03 — Email Templates x3',
-    content: 'Subject: Project proposal — [Your Name]\n\nHi [Name], great to connect. Based on our conversation, I\'d approach this as a [X]-day project at my standard rate of [rate]/day, bringing the total to [project rate]. I\'ve attached a brief scope. Happy to jump on a call to discuss.',
+    content: 'Subject: Project proposal\n\nHi [Name], great to connect. Based on our conversation, I would approach this as a [X]-day project at my standard rate of [rate]/day, bringing the total to [project rate]. I have attached a brief scope. Happy to jump on a call to discuss.',
   },
   {
     section: '04 — Raise Your Rates Guide',
@@ -40,12 +40,20 @@ export default function Results() {
 
   const { dayRate, rangeLow, rangeHigh, monthly, annual, project, retainer, positioning, script } = data
 
-  const fmt = (n) => n ? (typeof n === 'string' ? n : `£${Number(n).toLocaleString('en-GB')}`) : '—'
+  const fmt = (n) => {
+    if (!n) return '—'
+    if (typeof n === 'string') return n
+    return 'GBP' + Number(n).toLocaleString('en-GB')
+  }
 
   const copyScript = () => {
     navigator.clipboard.writeText(script || '')
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
+  }
+
+  const openCoffee = () => {
+    window.open('https://buymeacoffee.com/claritycosts', '_blank')
   }
 
   return (
@@ -54,7 +62,10 @@ export default function Results() {
       <div className="page-header">
         <div className="page-header-inner">
           <div className="page-tag">Your results</div>
-          <h1>Your rate is <span className="green">{fmt(dayRate)}</span><span style={{ fontSize: '1.5rem', fontWeight: 400, color: 'var(--muted)' }}> /day</span></h1>
+          <h1>
+            Your rate is <span className="green">{fmt(dayRate)}</span>
+            <span style={{ fontSize: '1.5rem', fontWeight: 400, color: 'var(--muted)' }}> /day</span>
+          </h1>
           <p>Based on your specialty, experience, and UK market data.</p>
         </div>
       </div>
@@ -64,7 +75,7 @@ export default function Results() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16, marginBottom: 24 }}>
           {[
             { label: 'Day Rate',     value: fmt(dayRate), sub: 'Recommended' },
-            { label: 'Market Range', value: `${fmt(rangeLow)}–${fmt(rangeHigh)}`, sub: 'Your discipline & region' },
+            { label: 'Market Range', value: fmt(rangeLow) + ' – ' + fmt(rangeHigh), sub: 'Your discipline & region' },
             { label: 'Project Rate', value: fmt(project), sub: '5-day estimate' },
           ].map(c => (
             <div key={c.label} className="card" style={{ textAlign: 'center' }}>
@@ -92,7 +103,7 @@ export default function Results() {
         {positioning && (
           <div className="card" style={{ marginBottom: 20 }}>
             <div style={{ fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--muted2)', marginBottom: 14 }}>Your positioning statement</div>
-            <p style={{ fontSize: 16, color: 'var(--white)', lineHeight: 1.7, fontStyle: 'italic' }}>"{positioning}"</p>
+            <p style={{ fontSize: 16, color: 'var(--white)', lineHeight: 1.7, fontStyle: 'italic' }}>{positioning}</p>
           </div>
         )}
 
@@ -100,15 +111,17 @@ export default function Results() {
           <div className="card" style={{ marginBottom: 40 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
               <div style={{ fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--muted2)' }}>Your charge script</div>
-              <button onClick={copyScript} style={{ background: copied ? 'rgba(0,232,122,.15)' : 'var(--card2)', border: '1px solid var(--border2)', borderRadius: 8, padding: '6px 14px', fontSize: 12, fontWeight: 600, color: copied ? 'var(--green)' : 'var(--muted)', cursor: 'pointer', fontFamily: 'inherit', transition: 'all .2s' }}>
+              <button
+                onClick={copyScript}
+                style={{ background: copied ? 'rgba(0,232,122,.15)' : 'var(--card2)', border: '1px solid var(--border2)', borderRadius: 8, padding: '6px 14px', fontSize: 12, fontWeight: 600, color: copied ? 'var(--green)' : 'var(--muted)', cursor: 'pointer', fontFamily: 'inherit', transition: 'all .2s' }}
+              >
                 {copied ? 'Copied' : 'Copy'}
               </button>
             </div>
-            <p style={{ fontSize: 15, color: 'var(--text)', lineHeight: 1.75 }}>"{script}"</p>
+            <p style={{ fontSize: 15, color: 'var(--text)', lineHeight: 1.75 }}>{script}</p>
           </div>
         )}
 
-        {/* Sample report preview */}
         <div style={{ marginBottom: 24 }}>
           <button
             onClick={() => setPreview(p => !p)}
@@ -138,7 +151,6 @@ export default function Results() {
           )}
         </div>
 
-        {/* Upgrade CTA */}
         <div style={{ background: 'linear-gradient(140deg,#0a1f14,#061510)', border: '1px solid rgba(0,232,122,.25)', borderRadius: 20, padding: '40px 36px', textAlign: 'center', position: 'relative', overflow: 'hidden', marginBottom: 20 }}>
           <div style={{ position: 'absolute', top: -40, right: -40, width: 180, height: 180, background: 'radial-gradient(circle,rgba(0,232,122,.12) 0%,transparent 65%)', pointerEvents: 'none' }} />
           <span className="badge badge-green" style={{ marginBottom: 16, display: 'inline-block' }}>Full Toolkit — £9</span>
@@ -152,16 +164,13 @@ export default function Results() {
           <p style={{ fontSize: 12, color: 'var(--muted2)', marginTop: 14 }}>One-time · No subscription · Instant delivery</p>
         </div>
 
-        {/* Buy me a coffee */}
         <div style={{ textAlign: 'center', paddingTop: 8 }}>
-          
-            href="https://buymeacoffee.com/claritycosts"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--muted2)', textDecoration: 'none', padding: '8px 16px', borderRadius: 999, border: '1px solid var(--border2)' }}
+          <button
+            onClick={openCoffee}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--muted2)', background: 'none', cursor: 'pointer', padding: '8px 16px', borderRadius: 999, border: '1px solid var(--border2)', fontFamily: 'inherit' }}
           >
             Found this useful? Buy me a coffee
-          </a>
+          </button>
         </div>
 
       </div>
