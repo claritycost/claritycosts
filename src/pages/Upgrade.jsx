@@ -1,223 +1,20 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const styles = {
-  page: {
-    minHeight: '100vh',
-    background: 'linear-gradient(160deg, #0f1e35 0%, #1a3a5c 60%, #0c2340 100%)',
-    fontFamily: '"DM Sans", -apple-system, BlinkMacSystemFont, sans-serif',
-    padding: '0 0 60px',
-  },
-  header: {
-    padding: '24px 24px 0',
-    textAlign: 'center',
-  },
-  backBtn: {
-    background: 'none',
-    border: 'none',
-    color: 'rgba(255,255,255,0.5)',
-    fontSize: '14px',
-    cursor: 'pointer',
-    padding: '0',
-    display: 'inline-flex',
-    alignItems: 'center',
-    gap: '6px',
-  },
-  logo: {
-    fontSize: '18px',
-    fontWeight: '700',
-    color: '#f0c040',
-    letterSpacing: '-0.02em',
-    margin: '8px 0 0',
-    display: 'block',
-  },
-  container: {
-    maxWidth: '480px',
-    margin: '0 auto',
-    padding: '32px 16px 0',
-  },
-  badge: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    gap: '6px',
-    background: 'rgba(240,192,64,0.15)',
-    border: '1px solid rgba(240,192,64,0.3)',
-    borderRadius: '20px',
-    padding: '6px 14px',
-    fontSize: '12px',
-    color: '#f0c040',
-    fontWeight: '700',
-    marginBottom: '16px',
-    letterSpacing: '0.06em',
-    textTransform: 'uppercase',
-  },
-  headline: {
-    fontSize: 'clamp(28px, 7vw, 40px)',
-    fontWeight: '800',
-    color: '#ffffff',
-    lineHeight: '1.1',
-    margin: '0 0 14px',
-    letterSpacing: '-0.03em',
-  },
-  subline: {
-    fontSize: '16px',
-    color: 'rgba(255,255,255,0.65)',
-    lineHeight: '1.6',
-    margin: '0 0 32px',
-  },
-  card: {
-    background: '#ffffff',
-    borderRadius: '20px',
-    overflow: 'hidden',
-    marginBottom: '16px',
-    boxShadow: '0 8px 32px rgba(0,0,0,0.25)',
-  },
-  cardTop: {
-    background: 'linear-gradient(135deg, #0f1e35, #1a3a5c)',
-    padding: '24px',
-    textAlign: 'center',
-  },
-  priceTag: {
-    fontSize: '56px',
-    fontWeight: '900',
-    color: '#f0c040',
-    lineHeight: '1',
-    letterSpacing: '-0.04em',
-    margin: '0 0 4px',
-  },
-  priceNote: {
-    fontSize: '14px',
-    color: 'rgba(255,255,255,0.6)',
-    margin: '0',
-  },
-  includesList: {
-    padding: '24px',
-    listStyle: 'none',
-    margin: '0',
-  },
-  includesItem: {
-    display: 'flex',
-    alignItems: 'flex-start',
-    gap: '12px',
-    padding: '10px 0',
-    borderBottom: '1px solid #f1f5f9',
-  },
-  includesItemLast: {
-    display: 'flex',
-    alignItems: 'flex-start',
-    gap: '12px',
-    padding: '10px 0',
-    borderBottom: 'none',
-  },
-  checkCircle: {
-    width: '22px',
-    height: '22px',
-    borderRadius: '50%',
-    background: 'linear-gradient(135deg, #22c55e, #16a34a)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: '12px',
-    flexShrink: '0',
-    marginTop: '1px',
-  },
-  includesTitle: {
-    fontSize: '15px',
-    fontWeight: '700',
-    color: '#0f1e35',
-    margin: '0 0 3px',
-  },
-  includesDesc: {
-    fontSize: '13px',
-    color: '#64748b',
-    margin: '0',
-    lineHeight: '1.4',
-  },
-  formSection: {
-    padding: '0 0 16px',
-  },
-  label: {
-    display: 'block',
-    fontSize: '13px',
-    fontWeight: '700',
-    color: 'rgba(255,255,255,0.7)',
-    letterSpacing: '0.05em',
-    textTransform: 'uppercase',
-    marginBottom: '8px',
-  },
-  input: {
-    width: '100%',
-    padding: '15px 16px',
-    background: 'rgba(255,255,255,0.08)',
-    border: '1px solid rgba(255,255,255,0.15)',
-    borderRadius: '12px',
-    fontSize: '16px',
-    color: '#ffffff',
-    outline: 'none',
-    boxSizing: 'border-box',
-    transition: 'border-color 0.15s',
-  },
-  inputFocus: {
-    borderColor: 'rgba(240,192,64,0.6)',
-  },
-  payBtn: {
-    display: 'block',
-    width: '100%',
-    padding: '18px',
-    background: 'linear-gradient(135deg, #f0c040, #f59e0b)',
-    color: '#0f1e35',
-    border: 'none',
-    borderRadius: '14px',
-    fontSize: '17px',
-    fontWeight: '800',
-    cursor: 'pointer',
-    textAlign: 'center',
-    letterSpacing: '-0.01em',
-    marginTop: '16px',
-    transition: 'transform 0.15s, box-shadow 0.15s, opacity 0.15s',
-    boxShadow: '0 4px 20px rgba(240,192,64,0.45)',
-  },
-  payBtnDisabled: {
-    opacity: '0.5',
-    cursor: 'not-allowed',
-  },
-  securityNote: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: '6px',
-    fontSize: '12px',
-    color: 'rgba(255,255,255,0.4)',
-    marginTop: '12px',
-  },
-  errorMsg: {
-    background: 'rgba(239,68,68,0.15)',
-    border: '1px solid rgba(239,68,68,0.3)',
-    borderRadius: '10px',
-    padding: '12px 16px',
-    fontSize: '14px',
-    color: '#fca5a5',
-    marginTop: '12px',
-  },
-  guarantee: {
-    textAlign: 'center',
-    fontSize: '13px',
-    color: 'rgba(255,255,255,0.4)',
-    marginTop: '20px',
-    lineHeight: '1.5',
-  },
-}
-
 export default function Upgrade() {
-  const navigate = useNavigate()
-  const [email, setEmail] = useState('')
+  const navigate  = useNavigate()
+  const [email,   setEmail]   = useState('')
+  const [resultId, setResultId] = useState('')
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
-  const [focused, setFocused] = useState(false)
+  const [error,   setError]   = useState('')
 
   useEffect(() => {
-    const saved = sessionStorage.getItem('userEmail')
-    if (saved) setEmail(saved)
+    const raw = sessionStorage.getItem('cc_results')
+    if (raw) {
+      const data = JSON.parse(raw)
+      if (data.email)    setEmail(data.email)
+      if (data.id)       setResultId(data.id)
+    }
   }, [])
 
   const handlePay = async () => {
@@ -229,19 +26,10 @@ export default function Upgrade() {
     setLoading(true)
 
     try {
-      const rateCardData = sessionStorage.getItem('rateCardData')
-      const userAnswers = sessionStorage.getItem('userAnswers')
-      const existingId = sessionStorage.getItem('submissionId')
-
-      const res = await fetch('/api/create-checkout-session', {
-        method: 'POST',
+      const res  = await fetch('/api/create-checkout-session', {
+        method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email,
-          submissionId: existingId || null,
-          rateCardData: rateCardData ? JSON.parse(rateCardData) : null,
-          answers: userAnswers ? JSON.parse(userAnswers) : null,
-        }),
+        body:    JSON.stringify({ email, resultId }),
       })
 
       const json = await res.json()
@@ -250,7 +38,6 @@ export default function Upgrade() {
         throw new Error(json.error || 'Failed to start checkout')
       }
 
-      sessionStorage.setItem('userEmail', email)
       window.location.href = json.url
     } catch (err) {
       setError('Something went wrong. Please try again.')
@@ -259,99 +46,88 @@ export default function Upgrade() {
   }
 
   return (
-    <div style={styles.page}>
-      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <div style={{ background: 'var(--bg)', minHeight: '100vh', paddingBottom: 80 }}>
 
-      <div style={styles.header}>
-        <button style={styles.backBtn} onClick={() => navigate('/results')}>
-          ← Back to rate card
-        </button>
-        <span style={styles.logo}>Clarity Costs</span>
+      <div className="page-header">
+        <div className="page-header-inner">
+          <button
+            onClick={() => navigate('/results')}
+            style={{ background: 'none', border: 'none', color: 'var(--muted)', fontSize: 13, cursor: 'pointer', padding: 0, marginBottom: 16, fontFamily: 'inherit' }}
+          >
+            ← Back to results
+          </button>
+          <div className="page-tag">One-time upgrade</div>
+          <h1>Get the <span className="green">full toolkit</span></h1>
+          <p>PDF report, objection scripts, email templates, and a 6-month roadmap — personalised to you.</p>
+        </div>
       </div>
 
-      <div style={styles.container}>
-        <div style={styles.badge}>⚡ One-time upgrade</div>
-        <h1 style={styles.headline}>Get your<br />full report</h1>
-        <p style={styles.subline}>
-          A downloadable PDF rate card plus a personalised guide to confidently raising your rates — built for your exact situation.
-        </p>
+      <div style={{ maxWidth: 520, margin: '0 auto', padding: '0 24px' }}>
 
-        <div style={styles.card}>
-          <div style={styles.cardTop}>
-            <p style={styles.priceTag}>£9</p>
-            <p style={styles.priceNote}>One-time payment — yours to keep</p>
-          </div>
-          <ul style={styles.includesList}>
-            <li style={styles.includesItem}>
-              <div style={styles.checkCircle}>✓</div>
-              <div>
-                <p style={styles.includesTitle}>Printable PDF rate card</p>
-                <p style={styles.includesDesc}>Your rates, positioning statement, and charge script formatted for reference or client-facing use</p>
-              </div>
-            </li>
-            <li style={styles.includesItem}>
-              <div style={styles.checkCircle}>✓</div>
-              <div>
-                <p style={styles.includesTitle}>Raise Your Rates guide</p>
-                <p style={styles.includesDesc}>5 personalised strategies to increase what you charge — based on your specialty and current rates</p>
-              </div>
-            </li>
-            <li style={styles.includesItem}>
-              <div style={styles.checkCircle}>✓</div>
-              <div>
-                <p style={styles.includesTitle}>Client objection responses</p>
-                <p style={styles.includesDesc}>Word-for-word scripts to handle "that's too expensive" and "can you do it cheaper?"</p>
-              </div>
-            </li>
-            <li style={styles.includesItemLast}>
-              <div style={styles.checkCircle}>✓</div>
-              <div>
-                <p style={styles.includesTitle}>Rate review reminder</p>
-                <p style={styles.includesDesc}>Delivered to your inbox — when and how to revisit your rates every 6 months</p>
-              </div>
-            </li>
-          </ul>
+        {/* Price card */}
+        <div style={{ background: 'linear-gradient(140deg,#0a1f14,#061510)', border: '1px solid rgba(0,232,122,.25)', borderRadius: 20, padding: '32px', textAlign: 'center', marginBottom: 24, position: 'relative', overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', top: -40, right: -40, width: 180, height: 180, background: 'radial-gradient(circle,rgba(0,232,122,.1) 0%,transparent 65%)', pointerEvents: 'none' }} />
+          <div style={{ fontSize: 64, fontWeight: 900, color: 'var(--green)', letterSpacing: '-0.04em', lineHeight: 1 }}>£9</div>
+          <p style={{ fontSize: 14, color: 'var(--muted)', marginTop: 6 }}>One-time payment — yours to keep</p>
         </div>
 
-        <div style={styles.formSection}>
-          <label style={styles.label} htmlFor="upgrade-email">
-            Where should we send it?
+        {/* What you get */}
+        <div className="card" style={{ marginBottom: 24 }}>
+          {[
+            { title: '7-page PDF report',          desc: 'Your personalised rate card formatted for reference or client-facing use.' },
+            { title: '5 objection-handling scripts', desc: 'Word-for-word responses to "that\'s too expensive" and "can you do it cheaper?".' },
+            { title: '3 email templates',           desc: 'Ready-to-send templates for new enquiries, rate increases, and quote follow-ups.' },
+            { title: 'Raise Your Rates Guide',      desc: '10 strategies to increase what you charge, built for your discipline and market.' },
+            { title: '6-month rate roadmap',        desc: 'A month-by-month plan to consolidate and raise your rates without losing clients.' },
+          ].map((item, i, arr) => (
+            <div key={item.title} style={{ display: 'flex', gap: 14, padding: '14px 0', borderBottom: i < arr.length - 1 ? '1px solid var(--border)' : 'none' }}>
+              <div style={{ width: 22, height: 22, borderRadius: '50%', background: 'rgba(0,232,122,.15)', border: '1px solid rgba(0,232,122,.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, color: 'var(--green)', flexShrink: 0, marginTop: 1, fontWeight: 700 }}>✓</div>
+              <div>
+                <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--white)', marginBottom: 3 }}>{item.title}</div>
+                <div style={{ fontSize: 13, color: 'var(--muted)', lineHeight: 1.5 }}>{item.desc}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Email input */}
+        <div style={{ marginBottom: 12 }}>
+          <label style={{ display: 'block', fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--muted2)', marginBottom: 8 }}>
+            Delivery email
           </label>
           <input
-            id="upgrade-email"
             type="email"
             placeholder="your@email.com"
             value={email}
             onChange={e => setEmail(e.target.value)}
-            onFocus={() => setFocused(true)}
-            onBlur={() => setFocused(false)}
-            style={{ ...styles.input, ...(focused ? styles.inputFocus : {}) }}
+            style={{ width: '100%', padding: '13px 16px', background: 'var(--card)', border: '1px solid var(--border)', borderRadius: 10, fontSize: 15, color: 'var(--white)', outline: 'none', boxSizing: 'border-box', fontFamily: 'inherit' }}
           />
         </div>
 
+        {error && (
+          <div style={{ background: 'rgba(239,68,68,.1)', border: '1px solid rgba(239,68,68,.3)', borderRadius: 10, padding: '12px 16px', fontSize: 14, color: '#fca5a5', marginBottom: 12 }}>
+            {error}
+          </div>
+        )}
+
         <button
-          style={{
-            ...styles.payBtn,
-            ...(loading ? styles.payBtnDisabled : {}),
-          }}
           onClick={handlePay}
           disabled={loading}
-          onMouseOver={e => !loading && (e.target.style.transform = 'translateY(-1px)')}
-          onMouseOut={e => (e.target.style.transform = 'translateY(0)')}
+          className="btn-green"
+          style={{ width: '100%', opacity: loading ? 0.6 : 1, cursor: loading ? 'not-allowed' : 'pointer' }}
         >
-          {loading ? 'Redirecting to payment…' : '🔒 Pay £9 securely via Stripe'}
+          {loading ? 'Redirecting to payment…' : 'Pay £9 securely via Stripe'}
         </button>
 
-        {error && <div style={styles.errorMsg}>{error}</div>}
+        <p style={{ fontSize: 12, color: 'var(--muted2)', textAlign: 'center', marginTop: 12 }}>
+          Secure payment by Stripe · No card details stored
+        </p>
 
-        <div style={styles.securityNote}>
-          🔒 Secure payment by Stripe · No card details stored
-        </div>
-
-        <p style={styles.guarantee}>
+        <p style={{ fontSize: 12, color: 'var(--muted2)', textAlign: 'center', marginTop: 8, lineHeight: 1.6 }}>
           Delivered to your inbox within 2 minutes of payment.<br />
           Not what you expected? Email hello@claritycosts.co.uk for a full refund.
         </p>
+
       </div>
     </div>
   )
