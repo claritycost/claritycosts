@@ -2,10 +2,11 @@ import OpenAI from 'openai'
 import { createClient } from '@supabase/supabase-js'
 import { Resend } from 'resend'
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
-const resend  = new Resend(process.env.RESEND_API_KEY)
-
 export default async function handler(req, res) {
+
+  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+  const resend  = new Resend(process.env.RESEND_API_KEY)
+
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' })
   }
@@ -18,52 +19,52 @@ export default async function handler(req, res) {
 
   const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL
   const supabaseKey = process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY
-  const supabase = supabaseUrl && supabaseKey
-    ? createClient(supabaseUrl, supabaseKey)
-    : null
+  const supabase    = supabaseUrl && supabaseKey ? createClient(supabaseUrl, supabaseKey) : null
 
   try {
-    // ── 1. GPT-4o ─────────────────────────────────────────────────────────────
-    const prompt = `You are a UK freelance rate expert with deep knowledge of current UK contractor market rates.
+    const prompt = `You are a UK freelance rate expert. Calculate a realistic, personalised day rate for this specific freelancer based on their actual inputs. Do NOT use placeholder or example values.
 
-A UK freelancer has provided the following details:
+FREELANCER INPUTS:
 - Specialty: ${specialty}
 - Years of experience: ${experience}
-- Location: ${location}
-- Work type preference: ${worktype}
-- Target annual take-home income: ${income}
+- UK location: ${location}
+- Work type: ${worktype}
+- Target annual take-home: ${income}
 - Days per week available: ${days}
 - Target client type: ${clients}
 
-Respond ONLY with a valid JSON object — no markdown, no explanation, no code fences. Use exactly this structure:
+CALCULATION RULES:
+1. Start from the target take-home income and reverse-calculate: add 20% income tax, 9% NI, 15% business overheads
+2. Divide by billable days per year (days per week multiplied by 46 weeks)
+3. Adjust UP or DOWN based on: specialty market rates in ${location}, experience level, client type budget
+4. rangeLow = 20% below dayRate, rangeHigh = 25% above dayRate
+5. project = dayRate multiplied by 5
+6. retainer = dayRate multiplied by 8
+7. monthly = dayRate multiplied by days per week multiplied by 4.2, after rough tax estimate
+8. annual = monthly multiplied by 11
+
+CRITICAL: Every freelancer must get a different accurate rate. A junior designer in Manchester targeting £30k must get a very different number to a senior developer in London targeting £120k. Base every figure on the actual inputs above.
+
+Respond ONLY with a valid JSON object. No markdown. No code fences. No explanation:
 
 {
-  "dayRate": "£650",
-  "rangeLow": "£520",
-  "rangeHigh": "£780",
-  "monthly": "£9,100",
-  "annual": "£127,400",
-  "project": "£3,250",
-  "retainer": "£5,200",
-  "positioning": "Write a confident 2-sentence positioning statement in first person.",
-  "script": "Write a natural, confident response to what do you charge in first person. Include the day rate, a rough project estimate, and offer to send a proposal. Keep it conversational.",
-  "rationale": "1-2 sentences explaining how this rate was calculated."
-}
-
-Base your calculation on:
-1. Current UK market rates for ${specialty} in ${location}
-2. Experience adjustment for ${experience}
-3. Reverse-calculation from ${income} target after 20% self-employment tax, 10% NI, 15% overheads
-4. Client budget expectations for ${clients}
-5. Work type adjustment for ${worktype}
-
-Use realistic, current UK rates. Do not inflate.`
+  "dayRate": "actual calculated value with pound symbol",
+  "rangeLow": "actual calculated value with pound symbol",
+  "rangeHigh": "actual calculated value with pound symbol",
+  "monthly": "actual calculated value with pound symbol",
+  "annual": "actual calculated value with pound symbol",
+  "project": "actual calculated value with pound symbol",
+  "retainer": "actual calculated value with pound symbol",
+  "positioning": "2-sentence positioning statement in first person based on their specialty and client type",
+  "script": "natural confident response to what do you charge, mentioning their specific day rate and a project estimate",
+  "rationale": "2 sentences explaining exactly how this rate was calculated for this specific person"
+}`
 
     const completion = await openai.chat.completions.create({
       model:       'gpt-4o',
       messages:    [{ role: 'user', content: prompt }],
-      temperature: 0.2,
-      max_tokens:  700,
+      temperature: 0.4,
+      max_tokens:  800,
     })
 
     const raw = completion.choices[0].message.content.trim()
@@ -76,15 +77,23 @@ Use realistic, current UK rates. Do not inflate.`
       rateData = JSON.parse(cleaned)
     }
 
-    // ── 2. Save to Supabase ───────────────────────────────────────────────────
+    // Save to Supabase
     let savedId = null
     if (supabase) {
       const { data: saved, error: dbError } = await supabase
         .from('results')
         .insert({
           email,
-          answers:     { specialty, experience, location, worktype, income, days, clients },
-          rate:        { dayRate: rateData.dayRate, rangeLow: rateData.rangeLow, rangeHigh: rateData.rangeHigh, monthly: rateData.monthly, annual: rateData.annual, project: rateData.project, retainer: rateData.retainer },
+          answers: { specialty, experience, location, worktype, income, days, clients },
+          rate: {
+            dayRate:   rateData.dayRate,
+            rangeLow:  rateData.rangeLow,
+            rangeHigh: rateData.rangeHigh,
+            monthly:   rateData.monthly,
+            annual:    rateData.annual,
+            project:   rateData.project,
+            retainer:  rateData.retainer,
+          },
           positioning: rateData.positioning,
           script:      rateData.script,
           paid:        false,
@@ -96,8 +105,8 @@ Use realistic, current UK rates. Do not inflate.`
       else savedId = saved?.id
     }
 
-    // ── 3. Send email directly via Resend ─────────────────────────────────────
-    const appUrl  = process.env.VITE_APP_URL || 'https://claritycosts.co.uk'
+    // Send email
+    const appUrl = process.env.VITE_APP_URL || 'https://claritycosts.co.uk'
     const { dayRate, monthly, annual, project, retainer, positioning, script } = rateData
 
     const breakdownRows = [
@@ -146,15 +155,12 @@ Use realistic, current UK rates. Do not inflate.`
         </table>
       </td></tr>
       <tr><td style="padding-top:36px;text-align:center;">
-        <a href="${appUrl}/results" style="display:inline-block;background:#00e87a;color:#000;font-size:15px;font-weight:700;padding:15px 36px;border-radius:999px;text-decoration:none;">View your full results →</a>
-        <p style="font-size:13px;color:rgba(255,255,255,.35);margin:16px 0 0;">Want the full toolkit? Upgrade for just £9 — PDF report, objection scripts &amp; raise-your-rates guide.</p>
+        <a href="${appUrl}/results" style="display:inline-block;background:#00e87a;color:#000;font-size:15px;font-weight:700;padding:15px 36px;border-radius:999px;text-decoration:none;">View your full results</a>
+        <p style="font-size:13px;color:rgba(255,255,255,.35);margin:16px 0 0;">Want the full toolkit? Upgrade for just £9 — PDF report, objection scripts and raise-your-rates guide.</p>
       </td></tr>
       <tr><td style="padding-top:48px;">
         <p style="font-size:11px;color:rgba(255,255,255,.2);margin:0;line-height:1.8;">
-          © 2025 Hello Clarity Ltd · Registered in England and Wales<br/>
-          <a href="${appUrl}/privacy" style="color:rgba(0,232,122,.5);text-decoration:none;">Privacy Policy</a>
-          &nbsp;·&nbsp;
-          <a href="${appUrl}/cookie-policy" style="color:rgba(0,232,122,.5);text-decoration:none;">Cookie Policy</a>
+          2025 Hello Clarity Ltd · Registered in England and Wales
         </p>
       </td></tr>
     </table>
@@ -175,7 +181,6 @@ Use realistic, current UK rates. Do not inflate.`
       console.error('Email error:', err)
     }
 
-    // ── 4. Return to client ───────────────────────────────────────────────────
     return res.status(200).json({
       id:          savedId,
       dayRate:     rateData.dayRate,
