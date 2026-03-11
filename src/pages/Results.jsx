@@ -157,19 +157,27 @@ export default function Results() {
           <p style={{ fontSize: 12, color: 'var(--muted2)', marginTop: 14 }}>One-time · No subscription · Instant delivery</p>
         </div>
 
-        {/* Buy me a coffee — subtle */}
-        <div style={{ textAlign: 'center', paddingTop: 8 }}>
-          
-            href="https://buymeacoffee.com/claritycosts"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--muted2)', textDecoration: 'none', padding: '8px 16px', borderRadius: 999, border: '1px solid var(--border2)', transition: 'color .2s, border-color .2s' }}
-            onMouseEnter={e => { e.currentTarget.style.color = '#FFDD00'; e.currentTarget.style.borderColor = '#FFDD00' }}
-            onMouseLeave={e => { e.currentTarget.style.color = 'var(--muted2)'; e.currentTarget.style.borderColor = 'var(--border2)' }}
-          >
-            ☕ Found this useful? Buy me a coffee
-          </a>
-        </div>
+       {/* Buy me a coffee — subtle */}
+<div style={{ textAlign: 'center', paddingTop: 8 }}>
+  
+    href="https://buymeacoffee.com/claritycosts"
+    target="_blank"
+    rel="noopener noreferrer"
+    style={{
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: 8,
+      fontSize: 13,
+      color: 'var(--muted2)',
+      textDecoration: 'none',
+      padding: '8px 16px',
+      borderRadius: 999,
+      border: '1px solid var(--border2)',
+    }}
+  >
+    ☕ Found this useful? Buy me a coffee
+  </a>
+</div>
 
       </div>
     </div>
