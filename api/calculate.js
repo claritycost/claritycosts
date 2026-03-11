@@ -77,7 +77,6 @@ Respond ONLY with a valid JSON object. No markdown. No code fences. No explanati
       rateData = JSON.parse(cleaned)
     }
 
-    // Save to Supabase
     let savedId = null
     if (supabase) {
       const { data: saved, error: dbError } = await supabase
@@ -105,7 +104,6 @@ Respond ONLY with a valid JSON object. No markdown. No code fences. No explanati
       else savedId = saved?.id
     }
 
-    // Send email
     const appUrl = process.env.VITE_APP_URL || 'https://claritycosts.co.uk'
     const { dayRate, monthly, annual, project, retainer, positioning, script } = rateData
 
