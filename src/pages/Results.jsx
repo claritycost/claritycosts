@@ -7,11 +7,11 @@ const SAMPLE_REPORT = [
     content: 'Your rate is benchmarked against current UK market data for your discipline and region, adjusted for your experience level and target income. The calculation factors in 20% income tax, 9% National Insurance, and 15% overhead allowance — leaving your target take-home intact.',
   },
   {
-    section: '02 — Objection Scripts (×5)',
-    content: '"That\'s more than we usually pay." → "I understand — my rate reflects [X] years of specialist experience and the quality of output you\'ll get. I\'m happy to scope a smaller initial project so you can see the value firsthand. Would that work?"',
+    section: '02 — Objection Scripts x5',
+    content: 'That\'s more than we usually pay. → I understand — my rate reflects specialist experience and the quality of output you\'ll get. I\'m happy to scope a smaller initial project so you can see the value firsthand. Would that work?',
   },
   {
-    section: '03 — Email Templates (×3)',
+    section: '03 — Email Templates x3',
     content: 'Subject: Project proposal — [Your Name]\n\nHi [Name], great to connect. Based on our conversation, I\'d approach this as a [X]-day project at my standard rate of [rate]/day, bringing the total to [project rate]. I\'ve attached a brief scope. Happy to jump on a call to discuss.',
   },
   {
@@ -20,7 +20,7 @@ const SAMPLE_REPORT = [
   },
   {
     section: '05 — 6-Month Rate Roadmap',
-    content: 'Month 1–2: Consolidate at current rate. Month 3: Introduce higher rate for new clients only. Month 4: Review existing retainers. Month 5: Raise minimum project threshold. Month 6: Full rate increase across all work.',
+    content: 'Month 1-2: Consolidate at current rate. Month 3: Introduce higher rate for new clients only. Month 4: Review existing retainers. Month 5: Raise minimum project threshold. Month 6: Full rate increase across all work.',
   },
 ]
 
@@ -51,7 +51,6 @@ export default function Results() {
   return (
     <div style={{ background: 'var(--bg)', minHeight: '100vh', paddingBottom: 80 }}>
 
-      {/* Header */}
       <div className="page-header">
         <div className="page-header-inner">
           <div className="page-tag">Your results</div>
@@ -62,7 +61,6 @@ export default function Results() {
 
       <div style={{ maxWidth: 860, margin: '0 auto', padding: '0 24px' }}>
 
-        {/* Rate card grid — top row */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16, marginBottom: 24 }}>
           {[
             { label: 'Day Rate',     value: fmt(dayRate), sub: 'Recommended' },
@@ -77,7 +75,6 @@ export default function Results() {
           ))}
         </div>
 
-        {/* Rate card grid — bottom row */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16, marginBottom: 40 }}>
           {[
             { label: 'Monthly',  value: fmt(monthly),  sub: 'Est. take-home' },
@@ -92,7 +89,6 @@ export default function Results() {
           ))}
         </div>
 
-        {/* Positioning */}
         {positioning && (
           <div className="card" style={{ marginBottom: 20 }}>
             <div style={{ fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--muted2)', marginBottom: 14 }}>Your positioning statement</div>
@@ -100,13 +96,12 @@ export default function Results() {
           </div>
         )}
 
-        {/* Charge script */}
         {script && (
           <div className="card" style={{ marginBottom: 40 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
               <div style={{ fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--muted2)' }}>Your charge script</div>
               <button onClick={copyScript} style={{ background: copied ? 'rgba(0,232,122,.15)' : 'var(--card2)', border: '1px solid var(--border2)', borderRadius: 8, padding: '6px 14px', fontSize: 12, fontWeight: 600, color: copied ? 'var(--green)' : 'var(--muted)', cursor: 'pointer', fontFamily: 'inherit', transition: 'all .2s' }}>
-                {copied ? '✓ Copied' : 'Copy'}
+                {copied ? 'Copied' : 'Copy'}
               </button>
             </div>
             <p style={{ fontSize: 15, color: 'var(--text)', lineHeight: 1.75 }}>"{script}"</p>
@@ -117,11 +112,11 @@ export default function Results() {
         <div style={{ marginBottom: 24 }}>
           <button
             onClick={() => setPreview(p => !p)}
-            style={{ width: '100%', background: 'var(--card)', border: '1px solid var(--border)', borderRadius: 14, padding: '18px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', fontFamily: 'inherit' }}
+            style={{ width: '100%', background: 'var(--card)', border: '1px solid var(--border)', borderRadius: preview ? '14px 14px 0 0' : 14, padding: '18px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', fontFamily: 'inherit' }}
           >
             <div style={{ textAlign: 'left' }}>
               <div style={{ fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--muted2)', marginBottom: 4 }}>Full toolkit preview</div>
-              <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--white)' }}>See what's inside the £9 report →</div>
+              <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--white)' }}>See what is inside the £9 report</div>
             </div>
             <span style={{ fontSize: '1.2rem', color: 'var(--muted)', display: 'inline-block', transition: 'transform .25s', transform: preview ? 'rotate(45deg)' : 'none', flexShrink: 0 }}>+</span>
           </button>
@@ -153,31 +148,21 @@ export default function Results() {
           <p style={{ fontSize: 14, color: 'var(--muted)', lineHeight: 1.7, maxWidth: 480, margin: '0 auto 28px' }}>
             Get the 7-page PDF report, 5 objection-handling scripts, 3 email templates, and a personalised 6-month roadmap to keep raising your rates.
           </p>
-          <Link to="/upgrade" className="btn-green">Get the full toolkit — £9 →</Link>
+          <Link to="/upgrade" className="btn-green">Get the full toolkit — £9</Link>
           <p style={{ fontSize: 12, color: 'var(--muted2)', marginTop: 14 }}>One-time · No subscription · Instant delivery</p>
         </div>
 
-       {/* Buy me a coffee — subtle */}
-<div style={{ textAlign: 'center', paddingTop: 8 }}>
-  
-    href="https://buymeacoffee.com/claritycosts"
-    target="_blank"
-    rel="noopener noreferrer"
-    style={{
-      display: 'inline-flex',
-      alignItems: 'center',
-      gap: 8,
-      fontSize: 13,
-      color: 'var(--muted2)',
-      textDecoration: 'none',
-      padding: '8px 16px',
-      borderRadius: 999,
-      border: '1px solid var(--border2)',
-    }}
-  >
-    ☕ Found this useful? Buy me a coffee
-  </a>
-</div>
+        {/* Buy me a coffee */}
+        <div style={{ textAlign: 'center', paddingTop: 8 }}>
+          
+            href="https://buymeacoffee.com/claritycosts"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--muted2)', textDecoration: 'none', padding: '8px 16px', borderRadius: 999, border: '1px solid var(--border2)' }}
+          >
+            Found this useful? Buy me a coffee
+          </a>
+        </div>
 
       </div>
     </div>
