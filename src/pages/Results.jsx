@@ -1,18 +1,16 @@
 import { useEffect, useState } from 'react'
-import { useNavigate, Link } import { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 
 function PDFPreview({ dayRate, project, retainer, rangeLow, rangeHigh, monthly, annual, specialty }) {
   const [page, setPage] = useState(0)
-
-  const rate = dayRate  || '£650'
-  const proj = project  || '£3,250'
-  const ret  = retainer || '£5,200'
-  const rLow = rangeLow || '£520'
+  const rate  = dayRate   || '£650'
+  const proj  = project   || '£3,250'
+  const ret   = retainer  || '£5,200'
+  const rLow  = rangeLow  || '£520'
   const rHigh = rangeHigh || '£810'
-  const mon  = monthly  || '£4,100'
-  const ann  = annual   || '£45,100'
-  const spec = specialty || 'Your discipline'
+  const mon   = monthly   || '£4,100'
+  const ann   = annual    || '£45,100'
+  const spec  = specialty || 'Your discipline'
 
   const pageStyle = {
     background: '#080b12',
